@@ -70,6 +70,70 @@ Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
 
+### Test case: Handle invalid input without crashing
+
+**Aim:** Verify that empty, unknown, malformed, and out-of-range commands produce user-friendly errors and that Jarvis continues accepting commands.
+
+**Command:**
+
+```text
+java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -cp out Jarvis
+```
+
+**Input:**
+
+```text
+todo
+blah
+deadline return book
+event meeting /from Monday
+mark 1
+todo buy milk
+mark 2
+bye
+```
+
+**Expected output:**
+
+```text
+____________________________________________________________
+    ██╗ █████╗ ██████╗ ██╗   ██╗██╗███████╗
+     ██║██╔══██╗██╔══██╗██║   ██║██║██╔════╝
+     ██║███████║██████╔╝██║   ██║██║███████╗
+██   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║╚════██║
+╚█████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║███████║
+ ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝
+Hello! I'm Jarvis.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! The description of a todo cannot be empty.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! I'm sorry, but I don't know what that means.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! A deadline must include /by followed by a date or time.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! An event must include /from and /to times.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! That task number does not exist.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] buy milk
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! That task number does not exist.
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
 ## Test case template
 
 ### Test case: Replace with a short name
