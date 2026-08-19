@@ -35,12 +35,21 @@ public class Task {
     }
 
     /**
+     * Returns the kind marker shown before this task in the list.
+     *
+     * @return the task kind marker
+     */
+    protected String getTaskType() {
+        return "";
+    }
+
+    /**
      * Returns this task in the format used in Jarvis' task list.
      *
      * @return the task's status and description
      */
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + description;
+        return getTaskType() + "[" + getStatusIcon() + "] " + description;
     }
 }

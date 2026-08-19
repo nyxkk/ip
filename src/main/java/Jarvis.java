@@ -33,6 +33,7 @@ public class Jarvis {
         while (true) {
             String command = scanner.nextLine();
 
+            // Looking through the text to find keywords that initiates actions
             System.out.println(separator);
             if (command.equals("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
@@ -53,6 +54,26 @@ public class Jarvis {
                 tasks[index].markAsUndone();
                 System.out.println(" OK, I've marked this task as not done yet:");
                 System.out.println("   " + tasks[index]);
+            } else if (command.startsWith("todo ")) {
+                tasks[taskCount] = new Todo(command.substring(5));
+                taskCount++;
+                printTaskAdded(tasks[taskCount - 1], taskCount);
+            } else if (command.startsWith("deadline ")) {
+                int marker = command.indexOf(" /by ");
+                String description = command.substring(9, marker);
+                String by = command.substring(marker + 5);
+                tasks[taskCount] = new Deadline(description, by);
+                taskCount++;
+                printTaskAdded(tasks[taskCount - 1], taskCount);
+            } else if (command.startsWith("event ")) {
+                int fromMarker = command.indexOf(" /from ");
+                int toMarker = command.indexOf(" /to ", fromMarker + 7);
+                String description = command.substring(6, fromMarker);
+                String from = command.substring(fromMarker + 7, toMarker);
+                String to = command.substring(toMarker + 5);
+                tasks[taskCount] = new Event(description, from, to);
+                taskCount++;
+                printTaskAdded(tasks[taskCount - 1], taskCount);
             } else {
                 tasks[taskCount] = new Task(command);
                 taskCount++;
@@ -61,5 +82,12 @@ public class Jarvis {
 
             System.out.println(separator);
         }
+    }
+
+    /** Prints the confirmation shared by the typed task commands. */
+    private static void printTaskAdded(Task task, int taskCount) {
+        System.out.println(" Got it. I've added this task:");
+        System.out.println("   " + task);
+        System.out.println(" Now you have " + taskCount + " tasks in the list.");
     }
 }

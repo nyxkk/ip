@@ -2,6 +2,74 @@
 
 This file is the source of truth for console UI tests run with the `$test-ui` skill. Each test case is one program command with its input and expected output. Add concrete test cases before running the skill. Expected output is matched exactly, except that Windows and Unix line endings are treated as equivalent.
 
+## Test cases
+
+### Test case: Add and list typed tasks
+
+**Aim:** Verify that ToDos, Deadlines, and Events are created with the correct type marker and details, and that all three appear in the task list.
+
+**Command:**
+
+```text
+java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -cp out Jarvis
+```
+
+**Input:**
+
+```text
+todo borrow book
+deadline submit report /by Sunday
+event project meeting /from Monday 2pm /to 4pm
+deadline do homework /by no idea :-p
+list
+bye
+```
+
+**Expected output:**
+
+```text
+____________________________________________________________
+    ██╗ █████╗ ██████╗ ██╗   ██╗██╗███████╗
+     ██║██╔══██╗██╔══██╗██║   ██║██║██╔════╝
+     ██║███████║██████╔╝██║   ██║██║███████╗
+██   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║╚════██║
+╚█████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║███████║
+ ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝
+Hello! I'm Jarvis.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] borrow book
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [D][ ] submit report (by: Sunday)
+ Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [E][ ] project meeting (from: Monday 2pm to: 4pm)
+ Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [D][ ] do homework (by: no idea :-p)
+ Now you have 4 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][ ] borrow book
+ 2.[D][ ] submit report (by: Sunday)
+ 3.[E][ ] project meeting (from: Monday 2pm to: 4pm)
+ 4.[D][ ] do homework (by: no idea :-p)
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
 ## Test case template
 
 ### Test case: Replace with a short name
