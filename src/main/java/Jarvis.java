@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -27,8 +29,7 @@ public class Jarvis {
         System.out.println(separator);
 
         Scanner scanner = new Scanner(System.in);
-        Task[] tasks = new Task[100];
-        int taskCount = 0;
+        ArrayList<Task> tasks = new ArrayList<>();
 
         while (true) {
             String command = scanner.nextLine();
@@ -41,24 +42,29 @@ public class Jarvis {
                     break;
                 } else if (command.equals("list")) {
                     System.out.println(" Here are the tasks in your list:");
-                    for (int i = 0; i < taskCount; i++) {
-                        System.out.println(" " + (i + 1) + "." + tasks[i]);
+                    for (int i = 0; i < tasks.size(); i++) {
+                        System.out.println(" " + (i + 1) + "." + tasks.get(i));
                     }
                 } else if (command.startsWith("mark ")) {
-                    int index = getTaskIndex(command, 5, tasks, taskCount);
-                    tasks[index].markAsDone();
+                    int index = getTaskIndex(command, 5, tasks);
+                    tasks.get(index).markAsDone();
                     System.out.println(" Nice! I've marked this task as done:");
-                    System.out.println("   " + tasks[index]);
+                    System.out.println("   " + tasks.get(index));
                 } else if (command.startsWith("unmark ")) {
-                    int index = getTaskIndex(command, 7, tasks, taskCount);
-                    tasks[index].markAsUndone();
+                    int index = getTaskIndex(command, 7, tasks);
+                    tasks.get(index).markAsUndone();
                     System.out.println(" OK, I've marked this task as not done yet:");
-                    System.out.println("   " + tasks[index]);
+                    System.out.println("   " + tasks.get(index));
+                } else if (command.equals("delete") || command.startsWith("delete ")) {
+                    int index = getTaskIndex(command, 7, tasks);
+                    Task removedTask = tasks.remove(index);
+                    System.out.println(" Noted. I've removed this task:");
+                    System.out.println("   " + removedTask);
+                    System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                 } else if (command.equals("todo") || command.startsWith("todo ")) {
                     String description = requireText(command.substring(4), "todo");
-                    tasks[taskCount] = new Todo(description);
-                    taskCount++;
-                    printTaskAdded(tasks[taskCount - 1], taskCount);
+                    tasks.add(new Todo(description));
+                    printTaskAdded(tasks.get(tasks.size() - 1), tasks.size());
                 } else if (command.startsWith("deadline ")) {
                     int marker = command.indexOf(" /by ");
                     if (marker < 0) {
@@ -66,9 +72,8 @@ public class Jarvis {
                     }
                     String description = requireText(command.substring(9, marker), "deadline");
                     String by = requireText(command.substring(marker + 5), "deadline");
-                    tasks[taskCount] = new Deadline(description, by);
-                    taskCount++;
-                    printTaskAdded(tasks[taskCount - 1], taskCount);
+                    tasks.add(new Deadline(description, by));
+                    printTaskAdded(tasks.get(tasks.size() - 1), tasks.size());
                 } else if (command.startsWith("event ")) {
                     int fromMarker = command.indexOf(" /from ");
                     int toMarker = command.indexOf(" /to ", fromMarker + 7);
@@ -78,9 +83,8 @@ public class Jarvis {
                     String description = requireText(command.substring(6, fromMarker), "event");
                     String from = requireText(command.substring(fromMarker + 7, toMarker), "event");
                     String to = requireText(command.substring(toMarker + 5), "event");
-                    tasks[taskCount] = new Event(description, from, to);
-                    taskCount++;
-                    printTaskAdded(tasks[taskCount - 1], taskCount);
+                    tasks.add(new Event(description, from, to));
+                    printTaskAdded(tasks.get(tasks.size() - 1), tasks.size());
                 } else {
                     throw new JarvisException("I'm sorry, but I don't know what that means.");
                 }
@@ -100,7 +104,7 @@ public class Jarvis {
     }
 
     /** Validates and converts a one-based task number into an array index. */
-    private static int getTaskIndex(String command, int argumentStart, Task[] tasks, int taskCount) {
+    private static int getTaskIndex(String command, int argumentStart, List<Task> tasks) {
         int taskNumber;
         try {
             taskNumber = Integer.parseInt(command.substring(argumentStart).trim());
@@ -108,7 +112,7 @@ public class Jarvis {
             throw new JarvisException("The task number must be a whole number.");
         }
 
-        if (taskNumber < 1 || taskNumber > taskCount || tasks[taskNumber - 1] == null) {
+        if (taskNumber < 1 || taskNumber > tasks.size()) {
             throw new JarvisException("That task number does not exist.");
         }
         return taskNumber - 1;

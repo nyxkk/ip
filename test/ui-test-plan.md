@@ -173,3 +173,72 @@ Result: PASS | FAIL
 ```
 
 For a failure, the record must also include the expected output and the session must end without running remaining test cases.
+
+### Test case: Delete a task and keep list numbering contiguous
+
+**Aim:** Verify that `delete` removes the selected task, reports the removed task and new count, and shifts later tasks into contiguous list positions. This also checks that tasks stored in the `ArrayList` retain their types and done status.
+
+**Command:**
+
+```text
+java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -cp out Jarvis
+```
+
+**Input:**
+
+```text
+todo first task
+deadline second task /by Friday
+event third task /from Monday 2pm /to 4pm
+mark 2
+delete 2
+list
+bye
+```
+
+**Expected output:**
+
+```text
+____________________________________________________________
+    ██╗ █████╗ ██████╗ ██╗   ██╗██╗███████╗
+     ██║██╔══██╗██╔══██╗██║   ██║██║██╔════╝
+     ██║███████║██████╔╝██║   ██║██║███████╗
+██   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║╚════██║
+╚█████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║███████║
+ ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝
+Hello! I'm Jarvis.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] first task
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [D][ ] second task (by: Friday)
+ Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [E][ ] third task (from: Monday 2pm to: 4pm)
+ Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Nice! I've marked this task as done:
+   [D][X] second task (by: Friday)
+____________________________________________________________
+____________________________________________________________
+ Noted. I've removed this task:
+   [D][X] second task (by: Friday)
+ Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][ ] first task
+ 2.[E][ ] third task (from: Monday 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
