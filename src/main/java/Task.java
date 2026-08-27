@@ -3,6 +3,7 @@
  */
 public class Task {
     private final String description;
+    private final TaskType type;
     private boolean isDone;
 
     /**
@@ -11,7 +12,18 @@ public class Task {
      * @param description the text describing the task
      */
     public Task(String description) {
+        this(description, TaskType.GENERIC);
+    }
+
+    /**
+     * Creates a task with a category.
+     *
+     * @param description the text describing the task
+     * @param type the task category
+     */
+    protected Task(String description, TaskType type) {
         this.description = description;
+        this.type = type;
         this.isDone = false;
     }
 
@@ -35,21 +47,12 @@ public class Task {
     }
 
     /**
-     * Returns the kind marker shown before this task in the list.
-     *
-     * @return the task kind marker
-     */
-    protected String getTaskType() {
-        return "";
-    }
-
-    /**
      * Returns this task in the format used in Jarvis' task list.
      *
      * @return the task's status and description
      */
     @Override
     public String toString() {
-        return getTaskType() + "[" + getStatusIcon() + "] " + description;
+        return type.getDisplayIcon() + "[" + getStatusIcon() + "] " + description;
     }
 }

@@ -9,13 +9,8 @@ public class Deadline extends Task {
      * @param by the user-provided deadline text
      */
     public Deadline(String description, String by) {
-        super(description);
+        super(description, TaskType.DEADLINE);
         this.by = by;
-    }
-
-    @Override
-    protected String getTaskType() {
-        return "[D]";
     }
 
     @Override

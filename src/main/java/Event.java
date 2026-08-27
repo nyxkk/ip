@@ -11,14 +11,9 @@ public class Event extends Task {
      * @param to the user-provided event end text
      */
     public Event(String description, String from, String to) {
-        super(description);
+        super(description, TaskType.EVENT);
         this.from = from;
         this.to = to;
-    }
-
-    @Override
-    protected String getTaskType() {
-        return "[E]";
     }
 
     @Override

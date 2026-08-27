@@ -2,11 +2,6 @@
 public class Todo extends Task {
     /** Creates a ToDo with the supplied description. */
     public Todo(String description) {
-        super(description);
-    }
-
-    @Override
-    protected String getTaskType() {
-        return "[T]";
+        super(description, TaskType.TODO);
     }
 }
