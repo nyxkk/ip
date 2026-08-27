@@ -16,6 +16,16 @@ public class Event extends Task {
         this.to = to;
     }
 
+    /** Returns the user-provided event start text. */
+    public String getFrom() {
+        return from;
+    }
+
+    /** Returns the user-provided event end text. */
+    public String getTo() {
+        return to;
+    }
+
     @Override
     public String toString() {
         return super.toString() + " (from: " + from + " to: " + to + ")";

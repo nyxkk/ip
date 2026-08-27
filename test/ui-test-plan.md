@@ -11,7 +11,7 @@ This file is the source of truth for console UI tests run with the `$test-ui` sk
 **Command:**
 
 ```text
-java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -cp out Jarvis
+sh -c 'rm -f _temp/ui-test-data.txt && exec java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -Djarvis.storage=_temp/ui-test-data.txt -cp out Jarvis'
 ```
 
 **Input:**
@@ -70,6 +70,46 @@ Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
 
+### Test case: Save tasks and load them after restarting
+
+**Aim:** Verify that tasks and completion status are written to disk and restored when Jarvis starts again. The command creates a clean temporary save file, runs a first session, then starts a second session using that file.
+
+**Command:**
+
+```text
+sh -c 'rm -f _temp/level7-test-data.txt; printf "todo persisted task\\ndeadline submit report /by Friday\\nmark 2\\nbye\\n" | java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -Djarvis.storage=_temp/level7-test-data.txt -cp out Jarvis >/dev/null; exec java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -Djarvis.storage=_temp/level7-test-data.txt -cp out Jarvis'
+```
+
+**Input:**
+
+```text
+list
+bye
+```
+
+**Expected output:**
+
+```text
+____________________________________________________________
+    ██╗ █████╗ ██████╗ ██╗   ██╗██╗███████╗
+     ██║██╔══██╗██╔══██╗██║   ██║██║██╔════╝
+     ██║███████║██████╔╝██║   ██║██║███████╗
+██   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║╚════██║
+╚█████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║███████║
+ ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝
+Hello! I'm Jarvis.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][ ] persisted task
+ 2.[D][X] submit report (by: Friday)
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
 ### Test case: Handle invalid input without crashing
 
 **Aim:** Verify that empty, unknown, malformed, and out-of-range commands produce user-friendly errors and that Jarvis continues accepting commands.
@@ -77,7 +117,7 @@ ____________________________________________________________
 **Command:**
 
 ```text
-java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -cp out Jarvis
+sh -c 'rm -f _temp/ui-test-data.txt && exec java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -Djarvis.storage=_temp/ui-test-data.txt -cp out Jarvis'
 ```
 
 **Input:**
@@ -181,7 +221,7 @@ For a failure, the record must also include the expected output and the session 
 **Command:**
 
 ```text
-java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -cp out Jarvis
+sh -c 'rm -f _temp/ui-test-data.txt && exec java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -Djarvis.storage=_temp/ui-test-data.txt -cp out Jarvis'
 ```
 
 **Input:**
