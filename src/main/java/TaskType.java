@@ -23,4 +23,29 @@ public enum TaskType {
     public String getDisplayIcon() {
         return displayIcon;
     }
+
+    /**
+     * Returns the compact code used in the save file.
+     *
+     * @return this type's save-file code
+     */
+    public String getCode() {
+        return name().substring(0, 1);
+    }
+
+    /**
+     * Converts a save-file code into a task type.
+     *
+     * @param code the one-letter task type code
+     * @return the matching task type
+     * @throws JarvisException if the code is unknown
+     */
+    public static TaskType fromCode(String code) {
+        return switch (code) {
+        case "T" -> TODO;
+        case "D" -> DEADLINE;
+        case "E" -> EVENT;
+        default -> throw new JarvisException("The save file contains an unknown task type.");
+        };
+    }
 }

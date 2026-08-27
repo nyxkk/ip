@@ -30,6 +30,12 @@ public class Jarvis {
 
         Scanner scanner = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<>();
+        Storage storage = new Storage();
+        try {
+            tasks.addAll(storage.load());
+        } catch (JarvisException exception) {
+            System.out.println(" OOPS!!! " + exception.getMessage());
+        }
 
         while (true) {
             String command = scanner.nextLine();
@@ -48,22 +54,26 @@ public class Jarvis {
                 } else if (command.startsWith("mark ")) {
                     int index = getTaskIndex(command, 5, tasks);
                     tasks.get(index).markAsDone();
+                    storage.save(tasks);
                     System.out.println(" Nice! I've marked this task as done:");
                     System.out.println("   " + tasks.get(index));
                 } else if (command.startsWith("unmark ")) {
                     int index = getTaskIndex(command, 7, tasks);
                     tasks.get(index).markAsUndone();
+                    storage.save(tasks);
                     System.out.println(" OK, I've marked this task as not done yet:");
                     System.out.println("   " + tasks.get(index));
                 } else if (command.equals("delete") || command.startsWith("delete ")) {
                     int index = getTaskIndex(command, 7, tasks);
                     Task removedTask = tasks.remove(index);
+                    storage.save(tasks);
                     System.out.println(" Noted. I've removed this task:");
                     System.out.println("   " + removedTask);
                     System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                 } else if (command.equals("todo") || command.startsWith("todo ")) {
                     String description = requireText(command.substring(4), "todo");
                     tasks.add(new Todo(description));
+                    storage.save(tasks);
                     printTaskAdded(tasks.get(tasks.size() - 1), tasks.size());
                 } else if (command.startsWith("deadline ")) {
                     int marker = command.indexOf(" /by ");
@@ -73,6 +83,7 @@ public class Jarvis {
                     String description = requireText(command.substring(9, marker), "deadline");
                     String by = requireText(command.substring(marker + 5), "deadline");
                     tasks.add(new Deadline(description, by));
+                    storage.save(tasks);
                     printTaskAdded(tasks.get(tasks.size() - 1), tasks.size());
                 } else if (command.startsWith("event ")) {
                     int fromMarker = command.indexOf(" /from ");
@@ -84,6 +95,7 @@ public class Jarvis {
                     String from = requireText(command.substring(fromMarker + 7, toMarker), "event");
                     String to = requireText(command.substring(toMarker + 5), "event");
                     tasks.add(new Event(description, from, to));
+                    storage.save(tasks);
                     printTaskAdded(tasks.get(tasks.size() - 1), tasks.size());
                 } else {
                     throw new JarvisException("I'm sorry, but I don't know what that means.");

@@ -36,6 +36,21 @@ public class Task {
         return isDone ? "X" : " ";
     }
 
+    /** Returns whether this task has been completed. */
+    public boolean isDone() {
+        return isDone;
+    }
+
+    /** Returns the task description without its display markers. */
+    public String getDescription() {
+        return description;
+    }
+
+    /** Returns this task's category for persistence. */
+    public TaskType getType() {
+        return type;
+    }
+
     /** Marks this task as complete. */
     public void markAsDone() {
         this.isDone = true;
