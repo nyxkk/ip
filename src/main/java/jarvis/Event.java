@@ -32,12 +32,20 @@ public class Event extends Task {
         this(description, parseDateTime(from), parseDateTime(to));
     }
 
-    /** Returns the event start as a typed date and time. */
+    /**
+     * Returns the event start as a typed date and time.
+     *
+     * @return the event start date and time
+     */
     public LocalDateTime getFrom() {
         return from;
     }
 
-    /** Returns the event end as a typed date and time. */
+    /**
+     * Returns the event end as a typed date and time.
+     *
+     * @return the event end date and time
+     */
     public LocalDateTime getTo() {
         return to;
     }

@@ -38,17 +38,29 @@ public class Task {
         return isDone ? "X" : " ";
     }
 
-    /** Returns whether this task has been completed. */
+    /**
+     * Returns whether this task has been completed.
+     *
+     * @return {@code true} when this task is complete
+     */
     public boolean isDone() {
         return isDone;
     }
 
-    /** Returns the task description without its display markers. */
+    /**
+     * Returns the task description without its display markers.
+     *
+     * @return the task description
+     */
     public String getDescription() {
         return description;
     }
 
-    /** Returns this task's category for persistence. */
+    /**
+     * Returns this task's category for persistence.
+     *
+     * @return this task's category
+     */
     public TaskType getType() {
         return type;
     }

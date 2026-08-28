@@ -49,6 +49,14 @@ To run the JUnit test suite, use:
 ./gradlew test
 ```
 
+To generate the HTML API documentation, use:
+
+```bash
+./gradlew javadoc
+```
+
+The generated documentation is written to `build/docs/javadoc/`.
+
 To build and run the executable JAR, use:
 
 ```bash

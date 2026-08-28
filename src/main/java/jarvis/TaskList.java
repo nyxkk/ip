@@ -12,32 +12,60 @@ public class TaskList {
         this.tasks = new ArrayList<>();
     }
 
-    /** Creates a task list containing the supplied tasks. */
+    /**
+     * Creates a task list containing the supplied tasks.
+     *
+     * @param tasks the initial tasks to copy into this list
+     */
     public TaskList(List<Task> tasks) {
         this.tasks = new ArrayList<>(tasks);
     }
 
-    /** Adds a task to the end of the list. */
+    /**
+     * Adds a task to the end of the list.
+     *
+     * @param task the task to add
+     */
     public void add(Task task) {
         tasks.add(task);
     }
 
-    /** Returns the task at a one-based position, or an input error if it is absent. */
+    /**
+     * Returns the task at a one-based position, or an input error if it is absent.
+     *
+     * @param oneBasedPosition the task position starting at one
+     * @return the task at that position
+     * @throws JarvisException if the position is outside the list
+     */
     public Task get(int oneBasedPosition) {
         return tasks.get(toIndex(oneBasedPosition));
     }
 
-    /** Removes and returns the task at a one-based position. */
+    /**
+     * Removes and returns the task at a one-based position.
+     *
+     * @param oneBasedPosition the task position starting at one
+     * @return the removed task
+     * @throws JarvisException if the position is outside the list
+     */
     public Task remove(int oneBasedPosition) {
         return tasks.remove(toIndex(oneBasedPosition));
     }
 
-    /** Returns the number of tasks currently stored. */
+    /**
+     * Returns the number of tasks currently stored.
+     *
+     * @return the number of tasks
+     */
     public int size() {
         return tasks.size();
     }
 
-    /** Returns a read-only view for display and persistence. */
+    /**
+     * Returns a read-only view for display and persistence.
+     *
+     * @return an unmodifiable snapshot of the tasks
+     */
     public List<Task> getTasks() {
         return List.copyOf(tasks);
     }

@@ -29,7 +29,13 @@ public final class DateTimeParser {
         // Utility class; do not instantiate.
     }
 
-    /** Parses a date in ISO format or day/month/year format. */
+    /**
+     * Parses a date in ISO format or day/month/year format.
+     *
+     * @param text the date entered by the user
+     * @return the parsed date
+     * @throws DateTimeParseException if the text is not a supported date
+     */
     public static LocalDate parseDate(String text) {
         for (DateTimeFormatter formatter : DATE_FORMATTERS) {
             try {
@@ -41,7 +47,13 @@ public final class DateTimeParser {
         throw new DateTimeParseException("Unsupported date", text, 0);
     }
 
-    /** Parses a date and time in ISO-style or day/month/year format. */
+    /**
+     * Parses a date and time in ISO-style or day/month/year format.
+     *
+     * @param text the date and time entered by the user
+     * @return the parsed date and time
+     * @throws DateTimeParseException if the text is not a supported date and time
+     */
     public static LocalDateTime parseDateTime(String text) {
         for (DateTimeFormatter formatter : DATE_TIME_FORMATTERS) {
             try {
@@ -53,22 +65,42 @@ public final class DateTimeParser {
         throw new DateTimeParseException("Unsupported date and time", text, 0);
     }
 
-    /** Formats a date for display to a Jarvis user. */
+    /**
+     * Formats a date for display to a Jarvis user.
+     *
+     * @param date the date to format
+     * @return the formatted date
+     */
     public static String formatDate(LocalDate date) {
         return date.format(DISPLAY_DATE);
     }
 
-    /** Formats a date and time for display to a Jarvis user. */
+    /**
+     * Formats a date and time for display to a Jarvis user.
+     *
+     * @param dateTime the date and time to format
+     * @return the formatted date and time
+     */
     public static String formatDateTime(LocalDateTime dateTime) {
         return dateTime.format(DISPLAY_DATE_TIME);
     }
 
-    /** Formats a date in the stable representation used by the save file. */
+    /**
+     * Formats a date in the stable representation used by the save file.
+     *
+     * @param date the date to format
+     * @return the storage-format date
+     */
     public static String formatStorageDate(LocalDate date) {
         return date.format(DateTimeFormatter.ISO_LOCAL_DATE);
     }
 
-    /** Formats a date and time in the stable representation used by the save file. */
+    /**
+     * Formats a date and time in the stable representation used by the save file.
+     *
+     * @param dateTime the date and time to format
+     * @return the storage-format date and time
+     */
     public static String formatStorageDateTime(LocalDateTime dateTime) {
         return dateTime.format(STORAGE_DATE_TIME);
     }
