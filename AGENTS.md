@@ -37,3 +37,7 @@ Do not commit or push unless explicitly asked.
 ## Code-update verification
 
 After every code update, review `test/ui-test-plan.md` and add or revise test cases when the change affects the console UI, its inputs, or its output. Then invoke the project-local `test-ui` skill (`.codex/skills/test-ui/SKILL.md`) and run all concrete cases in the plan. Follow that skill's fail-fast behavior: capture and show the console input/output, and stop at the first mismatch while reporting the expected and actual output. If the plan contains no concrete cases, note that explicitly rather than inventing expected output.
+
+## Submission guidance
+
+When reporting completed implementation work, always include concise submission instructions. Tailor them to the current increment's branch, merge, tag, commit, and push requirements, and remind the user that no commit or push is performed unless explicitly requested.
