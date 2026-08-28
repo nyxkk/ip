@@ -2,9 +2,9 @@ package jarvis;
 
 import java.time.LocalDateTime;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 /** Tests event construction, typed times, and display text. */
 public class EventTest {
