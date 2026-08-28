@@ -339,3 +339,48 @@ ____________________________________________________________
 Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
+
+### Test case: Run the executable JAR
+
+**Aim:** Verify that Gradle creates an executable JAR with Jarvis configured as its entry point, and that the packaged application still accepts console commands.
+
+**Command:**
+
+```text
+sh -c 'rm -f _temp/jar-test-data.txt && ./gradlew --quiet --no-daemon --console=plain jar >/dev/null && exec java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -Djarvis.storage=_temp/jar-test-data.txt -jar build/libs/jarvis.jar'
+```
+
+**Input:**
+
+```text
+todo packaged task
+list
+bye
+```
+
+**Expected output:**
+
+```text
+____________________________________________________________
+    ██╗ █████╗ ██████╗ ██╗   ██╗██╗███████╗
+     ██║██╔══██╗██╔══██╗██║   ██║██║██╔════╝
+     ██║███████║██████╔╝██║   ██║██║███████╗
+██   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║╚════██║
+╚█████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║███████║
+ ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝
+Hello! I'm Jarvis.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] packaged task
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][ ] packaged task
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```

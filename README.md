@@ -48,3 +48,10 @@ To run the JUnit test suite, use:
 ```bash
 ./gradlew test
 ```
+
+To build and run the executable JAR, use:
+
+```bash
+./gradlew jar
+java -jar build/libs/jarvis.jar
+```
