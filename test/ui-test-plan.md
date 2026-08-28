@@ -340,6 +340,69 @@ Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
 
+### Test case: Find tasks by keyword
+
+**Aim:** Verify that `find` matches partial descriptions without regard to case, preserves the original task numbers, and reports when there are no matches.
+
+**Command:**
+
+```text
+sh -c 'rm -f _temp/level9-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain run -Djarvis.storage=_temp/level9-test-data.txt'
+```
+
+**Input:**
+
+```text
+todo read book
+deadline return book /by 2019-12-06
+event planning /from 2019-12-07 0900 /to 2019-12-07 1000
+find BOOK
+find xyz
+bye
+```
+
+**Expected output:**
+
+```text
+____________________________________________________________
+    ██╗ █████╗ ██████╗ ██╗   ██╗██╗███████╗
+     ██║██╔══██╗██╔══██╗██║   ██║██║██╔════╝
+     ██║███████║██████╔╝██║   ██║██║███████╗
+██   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║╚════██║
+╚█████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║███████║
+ ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝
+Hello! I'm Jarvis.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] read book
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [D][ ] return book (by: Dec 06 2019)
+ Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [E][ ] planning (from: Dec 07 2019 09:00 to: Dec 07 2019 10:00)
+ Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Here are the matching tasks in your list:
+ 1.[T][ ] read book
+ 2.[D][ ] return book (by: Dec 06 2019)
+____________________________________________________________
+____________________________________________________________
+ Here are the matching tasks in your list:
+ No matching tasks found.
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
 ### Test case: Run the executable JAR
 
 **Aim:** Verify that Gradle creates an executable JAR with Jarvis configured as its entry point, and that the packaged application still accepts console commands.

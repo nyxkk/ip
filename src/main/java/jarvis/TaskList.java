@@ -2,6 +2,7 @@ package jarvis;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /** Owns Jarvis' tasks and the operations that change the task list. */
 public class TaskList {
@@ -68,6 +69,24 @@ public class TaskList {
      */
     public List<Task> getTasks() {
         return List.copyOf(tasks);
+    }
+
+    /**
+     * Returns one-based positions of tasks whose descriptions contain a keyword.
+     *
+     * @param keyword the text to search for
+     * @return the matching one-based task positions
+     */
+    public List<Integer> find(String keyword) {
+        String normalizedKeyword = keyword.toLowerCase(Locale.ROOT);
+        ArrayList<Integer> matchingPositions = new ArrayList<>();
+        for (int i = 0; i < tasks.size(); i++) {
+            String description = tasks.get(i).getDescription().toLowerCase(Locale.ROOT);
+            if (description.contains(normalizedKeyword)) {
+                matchingPositions.add(i + 1);
+            }
+        }
+        return List.copyOf(matchingPositions);
     }
 
     private int toIndex(int oneBasedPosition) {

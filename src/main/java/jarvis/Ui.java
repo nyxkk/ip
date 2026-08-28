@@ -1,5 +1,6 @@
 package jarvis;
 
+import java.util.List;
 import java.util.Scanner;
 
 /** Handles all interaction between Jarvis and the console user. */
@@ -62,6 +63,23 @@ public class Ui {
         System.out.println(" Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println(" " + (i + 1) + "." + tasks.get(i + 1));
+        }
+    }
+
+    /** Displays tasks whose descriptions contain the supplied keyword.
+     *
+     * @param tasks the tasks to search
+     * @param keyword the text to search for
+     */
+    public void showMatchingTasks(TaskList tasks, String keyword) {
+        System.out.println(" Here are the matching tasks in your list:");
+        List<Integer> matchingPositions = tasks.find(keyword);
+        if (matchingPositions.isEmpty()) {
+            System.out.println(" No matching tasks found.");
+            return;
+        }
+        for (int position : matchingPositions) {
+            System.out.println(" " + position + "." + tasks.get(position));
         }
     }
 

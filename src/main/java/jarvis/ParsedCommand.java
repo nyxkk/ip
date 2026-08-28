@@ -8,6 +8,8 @@ public final class ParsedCommand {
         BYE,
         /** Displays all stored tasks. */
         LIST,
+        /** Finds tasks whose descriptions contain a keyword. */
+        FIND,
         /** Marks a task as complete. */
         MARK,
         /** Marks a task as incomplete. */
@@ -66,6 +68,15 @@ public final class ParsedCommand {
      */
     public static ParsedCommand todo(String description) {
         return new ParsedCommand(Type.TODO, description, "", "", 0);
+    }
+
+    /** Creates a command that searches task descriptions for a keyword.
+     *
+     * @param keyword the text to search for
+     * @return the structured find command
+     */
+    public static ParsedCommand find(String keyword) {
+        return new ParsedCommand(Type.FIND, keyword, "", "", 0);
     }
 
     /**

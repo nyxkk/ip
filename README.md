@@ -63,3 +63,12 @@ To build and run the executable JAR, use:
 ./gradlew jar
 java -jar build/libs/jarvis.jar
 ```
+
+## Finding tasks
+
+Use `find <keyword>` to display tasks whose descriptions contain the keyword.
+The search is case-insensitive and keeps the original task numbers.
+
+```text
+find book
+```
