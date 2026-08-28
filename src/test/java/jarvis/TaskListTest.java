@@ -2,10 +2,10 @@ package jarvis;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 /** Tests one-based task lookup, deletion, and read-only task access. */
 public class TaskListTest {

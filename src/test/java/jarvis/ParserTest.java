@@ -1,9 +1,9 @@
 package jarvis;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 /** Tests conversion of user input into structured commands. */
 public class ParserTest {
