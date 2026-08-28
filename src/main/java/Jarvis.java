@@ -1,144 +1,95 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
-/**
- * A simple command-line assistant that echoes commands until the user says goodbye.
- */
+/** A command-line task assistant. */
 public class Jarvis {
-    /**
-     * Starts Jarvis and reads commands from standard input.
-     *
-     * @param args command-line arguments, which are not used
-     */
-    public static void main(String[] args) {
-        String banner = """
-                     ██╗ █████╗ ██████╗ ██╗   ██╗██╗███████╗
-                     ██║██╔══██╗██╔══██╗██║   ██║██║██╔════╝
-                     ██║███████║██████╔╝██║   ██║██║███████╗
-                ██   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║╚════██║
-                ╚█████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║███████║
-                 ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝
-                """.stripTrailing();
+    private final Storage storage;
+    private final Parser parser;
+    private final Ui ui;
 
-        String separator = "_".repeat(60);
-        System.out.println(separator);
-        System.out.println(banner.substring(1));
-        System.out.println("Hello! I'm Jarvis.");
-        System.out.println("What can I do for you?");
-        System.out.println(separator);
+    /** Creates Jarvis with its console, parser, and file storage components. */
+    public Jarvis() {
+        storage = new Storage();
+        parser = new Parser();
+        ui = new Ui();
+    }
 
-        Scanner scanner = new Scanner(System.in);
-        ArrayList<Task> tasks = new ArrayList<>();
-        Storage storage = new Storage();
-        try {
-            tasks.addAll(storage.load());
-        } catch (JarvisException exception) {
-            System.out.println(" OOPS!!! " + exception.getMessage());
-        }
+    /** Starts Jarvis and processes commands until the user says goodbye. */
+    public void run() {
+        ui.showWelcome();
+        TaskList tasks = loadTasks();
 
         while (true) {
-            String command = scanner.nextLine();
-
-            System.out.println(separator);
+            String input = ui.readCommand();
+            ui.showLine();
             try {
-                if (command.equals("bye")) {
-                    System.out.println("Bye. Hope to see you again soon!");
-                    System.out.println(separator);
-                    break;
-                } else if (command.equals("list")) {
-                    System.out.println(" Here are the tasks in your list:");
-                    for (int i = 0; i < tasks.size(); i++) {
-                        System.out.println(" " + (i + 1) + "." + tasks.get(i));
-                    }
-                } else if (command.startsWith("mark ")) {
-                    int index = getTaskIndex(command, 5, tasks);
-                    tasks.get(index).markAsDone();
-                    storage.save(tasks);
-                    System.out.println(" Nice! I've marked this task as done:");
-                    System.out.println("   " + tasks.get(index));
-                } else if (command.startsWith("unmark ")) {
-                    int index = getTaskIndex(command, 7, tasks);
-                    tasks.get(index).markAsUndone();
-                    storage.save(tasks);
-                    System.out.println(" OK, I've marked this task as not done yet:");
-                    System.out.println("   " + tasks.get(index));
-                } else if (command.equals("delete") || command.startsWith("delete ")) {
-                    int index = getTaskIndex(command, 7, tasks);
-                    Task removedTask = tasks.remove(index);
-                    storage.save(tasks);
-                    System.out.println(" Noted. I've removed this task:");
-                    System.out.println("   " + removedTask);
-                    System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                } else if (command.equals("todo") || command.startsWith("todo ")) {
-                    String description = requireText(command.substring(4), "todo");
-                    tasks.add(new Todo(description));
-                    storage.save(tasks);
-                    printTaskAdded(tasks.get(tasks.size() - 1), tasks.size());
-                } else if (command.startsWith("deadline ")) {
-                    int marker = command.indexOf(" /by ");
-                    if (marker < 0) {
-                        throw new JarvisException("A deadline must include /by followed by a date or time.");
-                    }
-                    String description = requireText(command.substring(9, marker), "deadline");
-                    String by = requireText(command.substring(marker + 5), "deadline");
-                    tasks.add(new Deadline(description, by));
-                    storage.save(tasks);
-                    printTaskAdded(tasks.get(tasks.size() - 1), tasks.size());
-                } else if (command.startsWith("event ")) {
-                    int fromMarker = command.indexOf(" /from ");
-                    int toMarker = command.indexOf(" /to ", fromMarker + 7);
-                    if (fromMarker < 0 || toMarker < 0) {
-                        throw new JarvisException("An event must include /from and /to times.");
-                    }
-                    String description = requireText(command.substring(6, fromMarker), "event");
-                    String from = requireText(command.substring(fromMarker + 7, toMarker), "event");
-                    String to = requireText(command.substring(toMarker + 5), "event");
-                    tasks.add(new Event(description, from, to));
-                    storage.save(tasks);
-                    printTaskAdded(tasks.get(tasks.size() - 1), tasks.size());
-                } else {
-                    throw new JarvisException("I'm sorry, but I don't know what that means.");
+                ParsedCommand command = parser.parse(input);
+                if (command.getType() == ParsedCommand.Type.BYE) {
+                    ui.showGoodbye();
+                    ui.showLine();
+                    return;
                 }
+                execute(command, tasks);
             } catch (JarvisException exception) {
-                System.out.println(" OOPS!!! " + exception.getMessage());
+                ui.showError(exception.getMessage());
             }
-
-            System.out.println(separator);
+            ui.showLine();
         }
     }
 
-    /** Prints the confirmation shared by the typed task commands. */
-    private static void printTaskAdded(Task task, int taskCount) {
-        System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + task);
-        System.out.println(" Now you have " + taskCount + " tasks in the list.");
-    }
-
-    /** Validates and converts a one-based task number into an array index. */
-    private static int getTaskIndex(String command, int argumentStart, List<Task> tasks) {
-        int taskNumber;
+    /** Loads saved tasks, falling back to an empty list if loading fails. */
+    private TaskList loadTasks() {
         try {
-            taskNumber = Integer.parseInt(command.substring(argumentStart).trim());
-        } catch (NumberFormatException exception) {
-            throw new JarvisException("The task number must be a whole number.");
+            return new TaskList(storage.load());
+        } catch (JarvisException exception) {
+            ui.showError(exception.getMessage());
+            return new TaskList();
         }
-
-        if (taskNumber < 1 || taskNumber > tasks.size()) {
-            throw new JarvisException("That task number does not exist.");
-        }
-        return taskNumber - 1;
     }
 
-    /** Rejects missing descriptions and date/time values. */
-    private static String requireText(String text, String commandName) {
-        String trimmedText = text.trim();
-        if (trimmedText.isEmpty()) {
-            if (commandName.equals("todo")) {
-                throw new JarvisException("The description of a todo cannot be empty.");
-            }
-            throw new JarvisException("The " + commandName + " details cannot be empty.");
+    private void execute(ParsedCommand command, TaskList tasks) {
+        switch (command.getType()) {
+        case LIST -> ui.showTasks(tasks);
+        case MARK -> {
+            Task task = tasks.get(command.getTaskNumber());
+            task.markAsDone();
+            saveTasks(tasks);
+            ui.showMarked(task);
         }
-        return trimmedText;
+        case UNMARK -> {
+            Task task = tasks.get(command.getTaskNumber());
+            task.markAsUndone();
+            saveTasks(tasks);
+            ui.showUnmarked(task);
+        }
+        case DELETE -> {
+            Task removedTask = tasks.remove(command.getTaskNumber());
+            saveTasks(tasks);
+            ui.showDeleted(removedTask, tasks.size());
+        }
+        case TODO -> {
+            tasks.add(new Todo(command.getDescription()));
+            saveTasks(tasks);
+            ui.showTaskAdded(tasks.get(tasks.size()), tasks.size());
+        }
+        case DEADLINE -> {
+            tasks.add(new Deadline(command.getDescription(), command.getFirstDetail()));
+            saveTasks(tasks);
+            ui.showTaskAdded(tasks.get(tasks.size()), tasks.size());
+        }
+        case EVENT -> {
+            tasks.add(new Event(command.getDescription(), command.getFirstDetail(),
+                    command.getSecondDetail()));
+            saveTasks(tasks);
+            ui.showTaskAdded(tasks.get(tasks.size()), tasks.size());
+        }
+        case BYE -> throw new AssertionError("bye is handled before execution");
+        }
+    }
+
+    private void saveTasks(TaskList tasks) {
+        storage.save(tasks.getTasks());
+    }
+
+    /** Program entry point. */
+    public static void main(String[] args) {
+        new Jarvis().run();
     }
 }
