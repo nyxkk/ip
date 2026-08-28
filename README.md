@@ -24,3 +24,21 @@ Prerequisites: JDK 25, update Intellij to the most recent version.
    ```
 
 **Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+
+## Building and running with Gradle
+
+The project includes the Gradle Wrapper, so no separate Gradle installation is
+needed. Use JDK 25, then run these commands from the project root:
+
+```bash
+./gradlew build
+./gradlew run
+```
+
+The `build` command compiles the project and runs its automated checks. The
+`run` command starts Jarvis in the console. To use a different save file, pass
+it as a system property, for example:
+
+```bash
+./gradlew run -Djarvis.storage=./data/jarvis.txt
+```
