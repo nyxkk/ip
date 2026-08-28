@@ -1,3 +1,5 @@
+package jarvis;
+
 /** A command-line task assistant. */
 public class Jarvis {
     private final Storage storage;

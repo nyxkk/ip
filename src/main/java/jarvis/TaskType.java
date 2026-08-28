@@ -1,3 +1,5 @@
+package jarvis;
+
 /** The finite set of task categories supported by Jarvis. */
 public enum TaskType {
     /** A task without a date or time. */
