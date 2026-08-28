@@ -42,3 +42,9 @@ it as a system property, for example:
 ```bash
 ./gradlew run -Djarvis.storage=./data/jarvis.txt
 ```
+
+To run the JUnit test suite, use:
+
+```bash
+./gradlew test
+```
