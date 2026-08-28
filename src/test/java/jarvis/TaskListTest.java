@@ -34,4 +34,14 @@ public class TaskListTest {
         assertThrows(UnsupportedOperationException.class,
                 () -> tasks.getTasks().add(new Todo("second")));
     }
+
+    @Test
+    public void find_keyword_matchesDescriptionsCaseInsensitively() {
+        TaskList tasks = new TaskList(List.of(
+                new Todo("read book"),
+                new Todo("buy milk"),
+                new Todo("return BOOK")));
+
+        assertEquals(List.of(1, 3), tasks.find("book"));
+    }
 }

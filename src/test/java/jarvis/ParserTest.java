@@ -29,6 +29,14 @@ public class ParserTest {
     }
 
     @Test
+    public void parse_findCommand_returnsKeyword() {
+        ParsedCommand command = parser.parse("find Book");
+
+        assertEquals(ParsedCommand.Type.FIND, command.getType());
+        assertEquals("Book", command.getDescription());
+    }
+
+    @Test
     public void parse_todoWithoutDescription_throwsException() {
         JarvisException exception = assertThrows(JarvisException.class,
                 () -> parser.parse("todo"));

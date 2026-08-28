@@ -4,7 +4,24 @@ package jarvis;
 public final class ParsedCommand {
     /** The command forms understood by Jarvis. */
     public enum Type {
-        BYE, LIST, MARK, UNMARK, DELETE, TODO, DEADLINE, EVENT
+        /** Ends the current Jarvis session. */
+        BYE,
+        /** Displays all stored tasks. */
+        LIST,
+        /** Finds tasks whose descriptions contain a keyword. */
+        FIND,
+        /** Marks a task as complete. */
+        MARK,
+        /** Marks a task as incomplete. */
+        UNMARK,
+        /** Removes a task from the list. */
+        DELETE,
+        /** Creates a task without a date or time. */
+        TODO,
+        /** Creates a task with a deadline. */
+        DEADLINE,
+        /** Creates a task with a start and end time. */
+        EVENT
     }
 
     private final Type type;
@@ -35,6 +52,11 @@ public final class ParsedCommand {
     /** Creates a todo command. */
     public static ParsedCommand todo(String description) {
         return new ParsedCommand(Type.TODO, description, "", "", 0);
+    }
+
+    /** Creates a command that searches task descriptions for a keyword. */
+    public static ParsedCommand find(String keyword) {
+        return new ParsedCommand(Type.FIND, keyword, "", "", 0);
     }
 
     /** Creates a deadline command. */

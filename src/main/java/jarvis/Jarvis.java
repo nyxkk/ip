@@ -49,6 +49,7 @@ public class Jarvis {
     private void execute(ParsedCommand command, TaskList tasks) {
         switch (command.getType()) {
         case LIST -> ui.showTasks(tasks);
+        case FIND -> ui.showMatchingTasks(tasks, command.getDescription());
         case MARK -> {
             Task task = tasks.get(command.getTaskNumber());
             task.markAsDone();
