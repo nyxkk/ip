@@ -28,6 +28,13 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
+tasks.named('jar', Jar) {
+    archiveFileName = 'jarvis.jar'
+    manifest {
+        attributes('Main-Class': application.mainClass.get())
+    }
+}
+
 tasks.named('test', Test) {
     useJUnitPlatform()
     testLogging {
