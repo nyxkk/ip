@@ -18,9 +18,9 @@ sh -c 'rm -f _temp/ui-test-data.txt && exec java -Dstdout.encoding=UTF-8 -Dfile.
 
 ```text
 todo borrow book
-deadline submit report /by Sunday
-event project meeting /from Monday 2pm /to 4pm
-deadline do homework /by no idea :-p
+deadline submit report /by 2019-12-08
+event project meeting /from 2019-12-09 1400 /to 2019-12-09 1600
+deadline do homework /by 2/12/2019 1800
 list
 bye
 ```
@@ -45,25 +45,77 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [D][ ] submit report (by: Sunday)
+   [D][ ] submit report (by: Dec 08 2019)
  Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [E][ ] project meeting (from: Monday 2pm to: 4pm)
+   [E][ ] project meeting (from: Dec 09 2019 14:00 to: Dec 09 2019 16:00)
  Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [D][ ] do homework (by: no idea :-p)
+   [D][ ] do homework (by: Dec 02 2019 18:00)
  Now you have 4 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
  1.[T][ ] borrow book
- 2.[D][ ] submit report (by: Sunday)
- 3.[E][ ] project meeting (from: Monday 2pm to: 4pm)
- 4.[D][ ] do homework (by: no idea :-p)
+ 2.[D][ ] submit report (by: Dec 08 2019)
+ 3.[E][ ] project meeting (from: Dec 09 2019 14:00 to: Dec 09 2019 16:00)
+ 4.[D][ ] do homework (by: Dec 02 2019 18:00)
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+### Test case: Parse and display dates and times
+
+**Aim:** Verify that ISO dates, day/month/year dates, and date-time inputs are stored as typed values and displayed in a readable format.
+
+**Command:**
+
+```text
+sh -c 'rm -f _temp/level8-test-data.txt && exec java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -Djarvis.storage=_temp/level8-test-data.txt -cp out Jarvis'
+```
+
+**Input:**
+
+```text
+deadline return book /by 2/12/2019 1800
+event project meeting /from 2019-10-15 1400 /to 2019-10-15 1600
+list
+bye
+```
+
+**Expected output:**
+
+```text
+____________________________________________________________
+    ██╗ █████╗ ██████╗ ██╗   ██╗██╗███████╗
+     ██║██╔══██╗██╔══██╗██║   ██║██║██╔════╝
+     ██║███████║██████╔╝██║   ██║██║███████╗
+██   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║╚════██║
+╚█████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║███████║
+ ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝
+Hello! I'm Jarvis.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [D][ ] return book (by: Dec 02 2019 18:00)
+ Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [E][ ] project meeting (from: Oct 15 2019 14:00 to: Oct 15 2019 16:00)
+ Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[D][ ] return book (by: Dec 02 2019 18:00)
+ 2.[E][ ] project meeting (from: Oct 15 2019 14:00 to: Oct 15 2019 16:00)
 ____________________________________________________________
 ____________________________________________________________
 Bye. Hope to see you again soon!
@@ -77,7 +129,7 @@ ____________________________________________________________
 **Command:**
 
 ```text
-sh -c 'rm -f _temp/level7-test-data.txt; printf "todo persisted task\\ndeadline submit report /by Friday\\nmark 2\\nbye\\n" | java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -Djarvis.storage=_temp/level7-test-data.txt -cp out Jarvis >/dev/null; exec java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -Djarvis.storage=_temp/level7-test-data.txt -cp out Jarvis'
+sh -c 'rm -f _temp/level7-test-data.txt; printf "todo persisted task\\ndeadline submit report /by 2019-12-06\\nevent planning /from 2019-12-07 0900 /to 2019-12-07 1000\\nmark 2\\nbye\\n" | java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -Djarvis.storage=_temp/level7-test-data.txt -cp out Jarvis >/dev/null; exec java -Dstdout.encoding=UTF-8 -Dfile.encoding=UTF-8 -Djarvis.storage=_temp/level7-test-data.txt -cp out Jarvis'
 ```
 
 **Input:**
@@ -103,7 +155,8 @@ ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
  1.[T][ ] persisted task
- 2.[D][X] submit report (by: Friday)
+ 2.[D][X] submit report (by: Dec 06 2019)
+ 3.[E][ ] planning (from: Dec 07 2019 09:00 to: Dec 07 2019 10:00)
 ____________________________________________________________
 ____________________________________________________________
 Bye. Hope to see you again soon!
@@ -127,6 +180,7 @@ todo
 blah
 deadline return book
 event meeting /from Monday
+deadline invalid date /by 2019-02-30
 mark 1
 todo buy milk
 mark 2
@@ -157,6 +211,9 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  OOPS!!! An event must include /from and /to times.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! Use a date such as 2019-10-15 or a date and time such as 2/12/2019 1800.
 ____________________________________________________________
 ____________________________________________________________
  OOPS!!! That task number does not exist.
@@ -228,8 +285,8 @@ sh -c 'rm -f _temp/ui-test-data.txt && exec java -Dstdout.encoding=UTF-8 -Dfile.
 
 ```text
 todo first task
-deadline second task /by Friday
-event third task /from Monday 2pm /to 4pm
+deadline second task /by 2019-12-13
+event third task /from 2019-12-14 1400 /to 2019-12-14 1600
 mark 2
 delete 2
 list
@@ -256,27 +313,27 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [D][ ] second task (by: Friday)
+   [D][ ] second task (by: Dec 13 2019)
  Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
-   [E][ ] third task (from: Monday 2pm to: 4pm)
+   [E][ ] third task (from: Dec 14 2019 14:00 to: Dec 14 2019 16:00)
  Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Nice! I've marked this task as done:
-   [D][X] second task (by: Friday)
+   [D][X] second task (by: Dec 13 2019)
 ____________________________________________________________
 ____________________________________________________________
  Noted. I've removed this task:
-   [D][X] second task (by: Friday)
+   [D][X] second task (by: Dec 13 2019)
  Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Here are the tasks in your list:
  1.[T][ ] first task
- 2.[E][ ] third task (from: Monday 2pm to: 4pm)
+ 2.[E][ ] third task (from: Dec 14 2019 14:00 to: Dec 14 2019 16:00)
 ____________________________________________________________
 ____________________________________________________________
 Bye. Hope to see you again soon!

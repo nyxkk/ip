@@ -106,10 +106,13 @@ public class Storage {
                 .append(" | ")
                 .append(task.getDescription());
         if (task instanceof Deadline deadline) {
-            line.append(" | ").append(deadline.getBy());
+            String by = deadline.includesTime()
+                    ? DateTimeParser.formatStorageDateTime(deadline.getBy())
+                    : DateTimeParser.formatStorageDate(deadline.getBy().toLocalDate());
+            line.append(" | ").append(by);
         } else if (task instanceof Event event) {
-            line.append(" | ").append(event.getFrom())
-                    .append(" | ").append(event.getTo());
+            line.append(" | ").append(DateTimeParser.formatStorageDateTime(event.getFrom()))
+                    .append(" | ").append(DateTimeParser.formatStorageDateTime(event.getTo()));
         }
         return line.toString();
     }

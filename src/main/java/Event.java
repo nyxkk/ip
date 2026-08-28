@@ -1,33 +1,56 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+
 /** A task that takes place at a stated time. */
 public class Event extends Task {
-    private final String from;
-    private final String to;
+    private final LocalDateTime from;
+    private final LocalDateTime to;
 
     /**
      * Creates an event.
      *
      * @param description what the event is
-     * @param from the user-provided event start text
-     * @param to the user-provided event end text
+     * @param from the event start date and time
+     * @param to the event end date and time
      */
-    public Event(String description, String from, String to) {
+    public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description, TaskType.EVENT);
         this.from = from;
         this.to = to;
     }
 
-    /** Returns the user-provided event start text. */
-    public String getFrom() {
+    /**
+     * Creates an event from user input.
+     *
+     * @param description what the event is
+     * @param from the user-provided event start date and time
+     * @param to the user-provided event end date and time
+     */
+    public Event(String description, String from, String to) {
+        this(description, parseDateTime(from), parseDateTime(to));
+    }
+
+    /** Returns the event start as a typed date and time. */
+    public LocalDateTime getFrom() {
         return from;
     }
 
-    /** Returns the user-provided event end text. */
-    public String getTo() {
+    /** Returns the event end as a typed date and time. */
+    public LocalDateTime getTo() {
         return to;
     }
 
     @Override
     public String toString() {
-        return super.toString() + " (from: " + from + " to: " + to + ")";
+        return super.toString() + " (from: " + DateTimeParser.formatDateTime(from)
+                + " to: " + DateTimeParser.formatDateTime(to) + ")";
+    }
+
+    private static LocalDateTime parseDateTime(String text) {
+        try {
+            return DateTimeParser.parseDateTime(text);
+        } catch (DateTimeParseException exception) {
+            throw new JarvisException("Use event times such as 2019-10-15 1800.");
+        }
     }
 }
