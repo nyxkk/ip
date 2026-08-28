@@ -2,7 +2,17 @@ package jarvis;
 
 /** Converts raw Jarvis input into structured commands. */
 public class Parser {
-    /** Parses one complete line entered by the user. */
+    /** Creates a parser for Jarvis commands. */
+    public Parser() {
+    }
+
+    /**
+     * Parses one complete line entered by the user.
+     *
+     * @param command the raw command entered by the user
+     * @return the structured command
+     * @throws JarvisException if the command is not recognized or is malformed
+     */
     public ParsedCommand parse(String command) {
         if (command.equals("bye")) {
             return ParsedCommand.simple(ParsedCommand.Type.BYE);

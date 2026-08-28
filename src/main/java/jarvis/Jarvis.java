@@ -90,7 +90,11 @@ public class Jarvis {
         storage.save(tasks.getTasks());
     }
 
-    /** Program entry point. */
+    /**
+     * Program entry point.
+     *
+     * @param args command-line arguments, currently unused
+     */
     public static void main(String[] args) {
         new Jarvis().run();
     }

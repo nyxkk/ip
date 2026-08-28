@@ -59,12 +59,20 @@ public class Deadline extends Task {
         this.includesTime = parsedIncludesTime;
     }
 
-    /** Returns the deadline as a typed date and time. */
+    /**
+     * Returns the deadline as a typed date and time.
+     *
+     * @return the deadline date and time
+     */
     public LocalDateTime getBy() {
         return by;
     }
 
-    /** Returns whether the user supplied a time as well as a date. */
+    /**
+     * Returns whether the user supplied a time as well as a date.
+     *
+     * @return {@code true} when the deadline includes a time
+     */
     public boolean includesTime() {
         return includesTime;
     }

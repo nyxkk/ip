@@ -30,7 +30,11 @@ public class Ui {
         showLine();
     }
 
-    /** Reads one command from the console. */
+    /**
+     * Reads one command from the console.
+     *
+     * @return the next line entered by the user
+     */
     public String readCommand() {
         return scanner.nextLine();
     }
@@ -40,12 +44,20 @@ public class Ui {
         System.out.println(SEPARATOR);
     }
 
-    /** Displays a user-facing error. */
+    /**
+     * Displays a user-facing error.
+     *
+     * @param message the explanation to display
+     */
     public void showError(String message) {
         System.out.println(" OOPS!!! " + message);
     }
 
-    /** Displays the tasks in their current order. */
+    /**
+     * Displays the tasks in their current order.
+     *
+     * @param tasks the tasks to display
+     */
     public void showTasks(TaskList tasks) {
         System.out.println(" Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
@@ -53,26 +65,44 @@ public class Ui {
         }
     }
 
-    /** Displays the confirmation for a newly added task. */
+    /**
+     * Displays the confirmation for a newly added task.
+     *
+     * @param task the task that was added
+     * @param taskCount the number of tasks after adding it
+     */
     public void showTaskAdded(Task task, int taskCount) {
         System.out.println(" Got it. I've added this task:");
         System.out.println("   " + task);
         System.out.println(" Now you have " + taskCount + " tasks in the list.");
     }
 
-    /** Displays the confirmation for marking a task done. */
+    /**
+     * Displays the confirmation for marking a task done.
+     *
+     * @param task the task that was marked done
+     */
     public void showMarked(Task task) {
         System.out.println(" Nice! I've marked this task as done:");
         System.out.println("   " + task);
     }
 
-    /** Displays the confirmation for marking a task undone. */
+    /**
+     * Displays the confirmation for marking a task undone.
+     *
+     * @param task the task that was marked undone
+     */
     public void showUnmarked(Task task) {
         System.out.println(" OK, I've marked this task as not done yet:");
         System.out.println("   " + task);
     }
 
-    /** Displays the confirmation for deleting a task. */
+    /**
+     * Displays the confirmation for deleting a task.
+     *
+     * @param task the task that was deleted
+     * @param remainingTasks the number of tasks left after deletion
+     */
     public void showDeleted(Task task, int remainingTasks) {
         System.out.println(" Noted. I've removed this task:");
         System.out.println("   " + task);
