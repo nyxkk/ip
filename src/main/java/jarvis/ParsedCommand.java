@@ -1,3 +1,5 @@
+package jarvis;
+
 /** The structured meaning of one line entered by a Jarvis user. */
 public final class ParsedCommand {
     /** The command forms understood by Jarvis. */

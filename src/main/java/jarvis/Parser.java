@@ -1,3 +1,5 @@
+package jarvis;
+
 /** Converts raw Jarvis input into structured commands. */
 public class Parser {
     /** Parses one complete line entered by the user. */
