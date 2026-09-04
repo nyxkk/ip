@@ -13,4 +13,3 @@ public class JarvisException extends RuntimeException {
         super(message);
     }
 }
- 

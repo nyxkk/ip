@@ -38,8 +38,7 @@ public class ParserTest {
 
     @Test
     public void parse_todoWithoutDescription_throwsException() {
-        JarvisException exception = assertThrows(JarvisException.class,
-                () -> parser.parse("todo"));
+        JarvisException exception = assertThrows(JarvisException.class, () -> parser.parse("todo"));
 
         assertEquals("The description of a todo cannot be empty.", exception.getMessage());
     }

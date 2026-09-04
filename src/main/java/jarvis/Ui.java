@@ -95,7 +95,8 @@ public class Ui {
         return message.toString();
     }
 
-    /** Displays tasks whose descriptions contain the supplied keyword.
+    /**
+     * Displays tasks whose descriptions contain the supplied keyword.
      *
      * @param tasks the tasks to search
      * @param keyword the text to search for
