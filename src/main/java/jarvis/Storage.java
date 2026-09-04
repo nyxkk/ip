@@ -74,13 +74,13 @@ public class Storage {
         try {
             TaskType type = TaskType.fromCode(fields[0]);
             Task task = switch (type) {
-            case TODO -> requireFieldCount(fields, 3, lineNumber,
-                    new Todo(fields[2]));
-            case DEADLINE -> requireFieldCount(fields, 4, lineNumber,
-                    new Deadline(fields[2], fields[3]));
-            case EVENT -> requireFieldCount(fields, 5, lineNumber,
-                    new Event(fields[2], fields[3], fields[4]));
-            case GENERIC -> throw new JarvisException("The save file contains an invalid task type.");
+                case TODO -> requireFieldCount(fields, 3, lineNumber,
+                        new Todo(fields[2]));
+                case DEADLINE -> requireFieldCount(fields, 4, lineNumber,
+                        new Deadline(fields[2], fields[3]));
+                case EVENT -> requireFieldCount(fields, 5, lineNumber,
+                        new Event(fields[2], fields[3], fields[4]));
+                case GENERIC -> throw new JarvisException("The save file contains an invalid task type.");
             };
             if ("1".equals(fields[1])) {
                 task.markAsDone();

@@ -1,14 +1,14 @@
 package jarvis;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -69,8 +69,7 @@ public class StorageTest {
     public void loadMalformedFile_unsupportedType_throwsException() throws IOException {
         Files.writeString(storageFile, "X | 0 | unknown task");
 
-        JarvisException exception = assertThrows(JarvisException.class,
-                () -> new Storage().load());
+        JarvisException exception = assertThrows(JarvisException.class, () -> new Storage().load());
 
         assertEquals("The save file contains an unknown task type.", exception.getMessage());
     }

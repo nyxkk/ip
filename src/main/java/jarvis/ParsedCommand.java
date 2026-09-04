@@ -70,7 +70,8 @@ public final class ParsedCommand {
         return new ParsedCommand(Type.TODO, description, "", "", 0);
     }
 
-    /** Creates a command that searches task descriptions for a keyword.
+    /**
+     * Creates a command that searches task descriptions for a keyword.
      *
      * @param keyword the text to search for
      * @return the structured find command

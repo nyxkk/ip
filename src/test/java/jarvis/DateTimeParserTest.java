@@ -1,11 +1,11 @@
 package jarvis;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -25,8 +25,7 @@ public class DateTimeParserTest {
 
     @Test
     public void parseDate_impossibleDate_throwsException() {
-        assertThrows(DateTimeParseException.class,
-                () -> DateTimeParser.parseDate("2019-02-30"));
+        assertThrows(DateTimeParseException.class, () -> DateTimeParser.parseDate("2019-02-30"));
     }
 
     @Test

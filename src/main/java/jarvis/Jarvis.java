@@ -76,42 +76,42 @@ public class Jarvis {
 
     private String execute(ParsedCommand command) {
         return switch (command.getType()) {
-        case LIST -> ui.getTasksMessage(tasks);
-        case FIND -> ui.getMatchingTasksMessage(tasks, command.getDescription());
-        case MARK -> {
-            Task task = tasks.get(command.getTaskNumber());
-            task.markAsDone();
-            saveTasks(tasks);
-            yield ui.getMarkedMessage(task);
-        }
-        case UNMARK -> {
-            Task task = tasks.get(command.getTaskNumber());
-            task.markAsUndone();
-            saveTasks(tasks);
-            yield ui.getUnmarkedMessage(task);
-        }
-        case DELETE -> {
-            Task removedTask = tasks.remove(command.getTaskNumber());
-            saveTasks(tasks);
-            yield ui.getDeletedMessage(removedTask, tasks.size());
-        }
-        case TODO -> {
-            tasks.add(new Todo(command.getDescription()));
-            saveTasks(tasks);
-            yield ui.getTaskAddedMessage(tasks.get(tasks.size()), tasks.size());
-        }
-        case DEADLINE -> {
-            tasks.add(new Deadline(command.getDescription(), command.getFirstDetail()));
-            saveTasks(tasks);
-            yield ui.getTaskAddedMessage(tasks.get(tasks.size()), tasks.size());
-        }
-        case EVENT -> {
-            tasks.add(new Event(command.getDescription(), command.getFirstDetail(),
-                    command.getSecondDetail()));
-            saveTasks(tasks);
-            yield ui.getTaskAddedMessage(tasks.get(tasks.size()), tasks.size());
-        }
-        case BYE -> throw new AssertionError("bye is handled before execution");
+            case LIST -> ui.getTasksMessage(tasks);
+            case FIND -> ui.getMatchingTasksMessage(tasks, command.getDescription());
+            case MARK -> {
+                Task task = tasks.get(command.getTaskNumber());
+                task.markAsDone();
+                saveTasks(tasks);
+                yield ui.getMarkedMessage(task);
+            }
+            case UNMARK -> {
+                Task task = tasks.get(command.getTaskNumber());
+                task.markAsUndone();
+                saveTasks(tasks);
+                yield ui.getUnmarkedMessage(task);
+            }
+            case DELETE -> {
+                Task removedTask = tasks.remove(command.getTaskNumber());
+                saveTasks(tasks);
+                yield ui.getDeletedMessage(removedTask, tasks.size());
+            }
+            case TODO -> {
+                tasks.add(new Todo(command.getDescription()));
+                saveTasks(tasks);
+                yield ui.getTaskAddedMessage(tasks.get(tasks.size()), tasks.size());
+            }
+            case DEADLINE -> {
+                tasks.add(new Deadline(command.getDescription(), command.getFirstDetail()));
+                saveTasks(tasks);
+                yield ui.getTaskAddedMessage(tasks.get(tasks.size()), tasks.size());
+            }
+            case EVENT -> {
+                tasks.add(new Event(command.getDescription(), command.getFirstDetail(),
+                        command.getSecondDetail()));
+                saveTasks(tasks);
+                yield ui.getTaskAddedMessage(tasks.get(tasks.size()), tasks.size());
+            }
+            case BYE -> throw new AssertionError("bye is handled before execution");
         };
     }
 

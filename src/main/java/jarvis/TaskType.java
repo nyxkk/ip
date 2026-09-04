@@ -44,10 +44,10 @@ public enum TaskType {
      */
     public static TaskType fromCode(String code) {
         return switch (code) {
-        case "T" -> TODO;
-        case "D" -> DEADLINE;
-        case "E" -> EVENT;
-        default -> throw new JarvisException("The save file contains an unknown task type.");
+            case "T" -> TODO;
+            case "D" -> DEADLINE;
+            case "E" -> EVENT;
+            default -> throw new JarvisException("The save file contains an unknown task type.");
         };
     }
 }

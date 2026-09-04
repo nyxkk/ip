@@ -49,6 +49,14 @@ To run the JUnit test suite, use:
 ./gradlew test
 ```
 
+To check the main and test code against the SE-EDU Java coding standard, use:
+
+```bash
+./gradlew checkstyleMain checkstyleTest
+```
+
+The `build` command also runs both Checkstyle tasks automatically.
+
 To generate the HTML API documentation, use:
 
 ```bash
