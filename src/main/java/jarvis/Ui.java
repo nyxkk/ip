@@ -3,7 +3,7 @@ package jarvis;
 import java.util.List;
 import java.util.Scanner;
 
-/** Handles all interaction between Jarvis and the console user. */
+/** Formats Jarvis messages and handles interaction with the console user. */
 public class Ui {
     private static final String SEPARATOR = "_".repeat(60);
     private static final String BANNER = """
@@ -26,9 +26,17 @@ public class Ui {
     public void showWelcome() {
         showLine();
         System.out.println(BANNER.substring(1));
-        System.out.println("Hello! I'm Jarvis.");
-        System.out.println("What can I do for you?");
+        System.out.println(getWelcomeMessage());
         showLine();
+    }
+
+    /**
+     * Returns the welcome text shared by the console and graphical interfaces.
+     *
+     * @return the welcome text
+     */
+    public String getWelcomeMessage() {
+        return "Hello! I'm Jarvis.\nWhat can I do for you?";
     }
 
     /**
@@ -51,7 +59,17 @@ public class Ui {
      * @param message the explanation to display
      */
     public void showError(String message) {
-        System.out.println(" OOPS!!! " + message);
+        System.out.println(getErrorMessage(message));
+    }
+
+    /**
+     * Formats an error for display in either interface.
+     *
+     * @param message the explanation to display
+     * @return the formatted error
+     */
+    public String getErrorMessage(String message) {
+        return " OOPS!!! " + message;
     }
 
     /**
@@ -60,10 +78,21 @@ public class Ui {
      * @param tasks the tasks to display
      */
     public void showTasks(TaskList tasks) {
-        System.out.println(" Here are the tasks in your list:");
+        System.out.println(getTasksMessage(tasks));
+    }
+
+    /**
+     * Formats all tasks in their current order.
+     *
+     * @param tasks the tasks to display
+     * @return the formatted task list
+     */
+    public String getTasksMessage(TaskList tasks) {
+        StringBuilder message = new StringBuilder(" Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(" " + (i + 1) + "." + tasks.get(i + 1));
+            message.append("\n ").append(i + 1).append(".").append(tasks.get(i + 1));
         }
+        return message.toString();
     }
 
     /** Displays tasks whose descriptions contain the supplied keyword.
@@ -72,15 +101,26 @@ public class Ui {
      * @param keyword the text to search for
      */
     public void showMatchingTasks(TaskList tasks, String keyword) {
-        System.out.println(" Here are the matching tasks in your list:");
+        System.out.println(getMatchingTasksMessage(tasks, keyword));
+    }
+
+    /**
+     * Formats the tasks whose descriptions contain the supplied keyword.
+     *
+     * @param tasks the tasks to search
+     * @param keyword the text to search for
+     * @return the formatted matching tasks
+     */
+    public String getMatchingTasksMessage(TaskList tasks, String keyword) {
+        StringBuilder message = new StringBuilder(" Here are the matching tasks in your list:");
         List<Integer> matchingPositions = tasks.find(keyword);
         if (matchingPositions.isEmpty()) {
-            System.out.println(" No matching tasks found.");
-            return;
+            return message.append("\n No matching tasks found.").toString();
         }
         for (int position : matchingPositions) {
-            System.out.println(" " + position + "." + tasks.get(position));
+            message.append("\n ").append(position).append(".").append(tasks.get(position));
         }
+        return message.toString();
     }
 
     /**
@@ -90,9 +130,20 @@ public class Ui {
      * @param taskCount the number of tasks after adding it
      */
     public void showTaskAdded(Task task, int taskCount) {
-        System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + task);
-        System.out.println(" Now you have " + taskCount + " tasks in the list.");
+        System.out.println(getTaskAddedMessage(task, taskCount));
+    }
+
+    /**
+     * Formats the confirmation for a newly added task.
+     *
+     * @param task the task that was added
+     * @param taskCount the number of tasks after adding it
+     * @return the formatted confirmation
+     */
+    public String getTaskAddedMessage(Task task, int taskCount) {
+        return " Got it. I've added this task:\n"
+                + "   " + task + "\n"
+                + " Now you have " + taskCount + " tasks in the list.";
     }
 
     /**
@@ -101,8 +152,17 @@ public class Ui {
      * @param task the task that was marked done
      */
     public void showMarked(Task task) {
-        System.out.println(" Nice! I've marked this task as done:");
-        System.out.println("   " + task);
+        System.out.println(getMarkedMessage(task));
+    }
+
+    /**
+     * Formats the confirmation for marking a task done.
+     *
+     * @param task the task that was marked done
+     * @return the formatted confirmation
+     */
+    public String getMarkedMessage(Task task) {
+        return " Nice! I've marked this task as done:\n   " + task;
     }
 
     /**
@@ -111,8 +171,17 @@ public class Ui {
      * @param task the task that was marked undone
      */
     public void showUnmarked(Task task) {
-        System.out.println(" OK, I've marked this task as not done yet:");
-        System.out.println("   " + task);
+        System.out.println(getUnmarkedMessage(task));
+    }
+
+    /**
+     * Formats the confirmation for marking a task undone.
+     *
+     * @param task the task that was marked undone
+     * @return the formatted confirmation
+     */
+    public String getUnmarkedMessage(Task task) {
+        return " OK, I've marked this task as not done yet:\n   " + task;
     }
 
     /**
@@ -122,13 +191,33 @@ public class Ui {
      * @param remainingTasks the number of tasks left after deletion
      */
     public void showDeleted(Task task, int remainingTasks) {
-        System.out.println(" Noted. I've removed this task:");
-        System.out.println("   " + task);
-        System.out.println(" Now you have " + remainingTasks + " tasks in the list.");
+        System.out.println(getDeletedMessage(task, remainingTasks));
+    }
+
+    /**
+     * Formats the confirmation for deleting a task.
+     *
+     * @param task the task that was deleted
+     * @param remainingTasks the number of tasks left after deletion
+     * @return the formatted confirmation
+     */
+    public String getDeletedMessage(Task task, int remainingTasks) {
+        return " Noted. I've removed this task:\n"
+                + "   " + task + "\n"
+                + " Now you have " + remainingTasks + " tasks in the list.";
     }
 
     /** Displays the farewell message. */
     public void showGoodbye() {
-        System.out.println("Bye. Hope to see you again soon!");
+        System.out.println(getGoodbyeMessage());
+    }
+
+    /**
+     * Returns the farewell shared by the console and graphical interfaces.
+     *
+     * @return the farewell message
+     */
+    public String getGoodbyeMessage() {
+        return "Bye. Hope to see you again soon!";
     }
 }
