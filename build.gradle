@@ -13,11 +13,25 @@ java {
 }
 
 application {
-    mainClass = 'jarvis.Jarvis'
+    mainClass = 'jarvis.Launcher'
 }
 
 dependencies {
+    String javaFxVersion = '17.0.7'
     String junitVersion = '5.14.4'
+
+    implementation "org.openjfx:javafx-base:${javaFxVersion}:win"
+    implementation "org.openjfx:javafx-base:${javaFxVersion}:mac"
+    implementation "org.openjfx:javafx-base:${javaFxVersion}:linux"
+    implementation "org.openjfx:javafx-controls:${javaFxVersion}:win"
+    implementation "org.openjfx:javafx-controls:${javaFxVersion}:mac"
+    implementation "org.openjfx:javafx-controls:${javaFxVersion}:linux"
+    implementation "org.openjfx:javafx-fxml:${javaFxVersion}:win"
+    implementation "org.openjfx:javafx-fxml:${javaFxVersion}:mac"
+    implementation "org.openjfx:javafx-fxml:${javaFxVersion}:linux"
+    implementation "org.openjfx:javafx-graphics:${javaFxVersion}:win"
+    implementation "org.openjfx:javafx-graphics:${javaFxVersion}:mac"
+    implementation "org.openjfx:javafx-graphics:${javaFxVersion}:linux"
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
@@ -31,7 +45,7 @@ tasks.withType(JavaCompile).configureEach {
 tasks.named('jar', Jar) {
     archiveFileName = 'jarvis.jar'
     manifest {
-        attributes('Main-Class': application.mainClass.get())
+        attributes('Main-Class': 'jarvis.Jarvis')
     }
 }
 
@@ -48,6 +62,15 @@ tasks.named('test', Test) {
 }
 
 tasks.named('run', JavaExec) {
+    systemProperty 'jarvis.storage', System.getProperty('jarvis.storage', 'data/jarvis.txt')
+    jvmArgs '-Dfile.encoding=UTF-8', '-Dstdout.encoding=UTF-8'
+}
+
+tasks.register('runConsole', JavaExec) {
+    group = 'application'
+    description = 'Runs the original console interface for testing.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'jarvis.Jarvis'
     standardInput = System.in
     systemProperty 'jarvis.storage', System.getProperty('jarvis.storage', 'data/jarvis.txt')
     jvmArgs '-Dfile.encoding=UTF-8', '-Dstdout.encoding=UTF-8'

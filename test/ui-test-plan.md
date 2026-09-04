@@ -11,7 +11,7 @@ This file is the source of truth for console UI tests run with the `$test-ui` sk
 **Command:**
 
 ```text
-sh -c 'rm -f _temp/ui-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain run -Djarvis.storage=_temp/ui-test-data.txt'
+sh -c 'rm -f _temp/ui-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djarvis.storage=_temp/ui-test-data.txt'
 ```
 
 **Input:**
@@ -77,7 +77,7 @@ ____________________________________________________________
 **Command:**
 
 ```text
-sh -c 'rm -f _temp/level8-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain run -Djarvis.storage=_temp/level8-test-data.txt'
+sh -c 'rm -f _temp/level8-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djarvis.storage=_temp/level8-test-data.txt'
 ```
 
 **Input:**
@@ -129,7 +129,7 @@ ____________________________________________________________
 **Command:**
 
 ```text
-sh -c 'rm -f _temp/level7-test-data.txt; printf "todo persisted task\\ndeadline submit report /by 2019-12-06\\nevent planning /from 2019-12-07 0900 /to 2019-12-07 1000\\nmark 2\\nbye\\n" | ./gradlew --quiet --no-daemon --console=plain run -Djarvis.storage=_temp/level7-test-data.txt >/dev/null; exec ./gradlew --quiet --no-daemon --console=plain run -Djarvis.storage=_temp/level7-test-data.txt'
+sh -c 'rm -f _temp/level7-test-data.txt; printf "todo persisted task\\ndeadline submit report /by 2019-12-06\\nevent planning /from 2019-12-07 0900 /to 2019-12-07 1000\\nmark 2\\nbye\\n" | ./gradlew --quiet --no-daemon --console=plain runConsole -Djarvis.storage=_temp/level7-test-data.txt >/dev/null; exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djarvis.storage=_temp/level7-test-data.txt'
 ```
 
 **Input:**
@@ -170,7 +170,7 @@ ____________________________________________________________
 **Command:**
 
 ```text
-sh -c 'rm -f _temp/ui-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain run -Djarvis.storage=_temp/ui-test-data.txt'
+sh -c 'rm -f _temp/ui-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djarvis.storage=_temp/ui-test-data.txt'
 ```
 
 **Input:**
@@ -278,7 +278,7 @@ For a failure, the record must also include the expected output and the session 
 **Command:**
 
 ```text
-sh -c 'rm -f _temp/ui-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain run -Djarvis.storage=_temp/ui-test-data.txt'
+sh -c 'rm -f _temp/ui-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djarvis.storage=_temp/ui-test-data.txt'
 ```
 
 **Input:**
@@ -347,7 +347,7 @@ ____________________________________________________________
 **Command:**
 
 ```text
-sh -c 'rm -f _temp/level9-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain run -Djarvis.storage=_temp/level9-test-data.txt'
+sh -c 'rm -f _temp/level9-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djarvis.storage=_temp/level9-test-data.txt'
 ```
 
 **Input:**

@@ -1,0 +1,59 @@
+.root-pane {
+    -fx-background-color: #111827;
+    -fx-font-family: "Arial";
+}
+
+.dialog-scroll-pane,
+.dialog-scroll-pane > .viewport {
+    -fx-background-color: #f3f4f6;
+}
+
+.dialog-scroll-pane {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.avatar {
+    -fx-background-color: #374151;
+    -fx-background-radius: 21;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.dialog-label {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 12;
+    -fx-font-size: 14px;
+    -fx-padding: 10 12 10 12;
+    -fx-text-fill: #111827;
+}
+
+.user-dialog .avatar {
+    -fx-background-color: #2563eb;
+}
+
+.user-dialog .dialog-label {
+    -fx-background-color: #dbeafe;
+    -fx-border-color: #93c5fd;
+}
+
+.command-field {
+    -fx-background-radius: 8;
+    -fx-font-size: 14px;
+    -fx-pref-height: 38px;
+}
+
+.send-button {
+    -fx-background-color: #2563eb;
+    -fx-background-radius: 8;
+    -fx-font-weight: bold;
+    -fx-pref-height: 38px;
+    -fx-text-fill: white;
+}
+
+.send-button:hover {
+    -fx-background-color: #1d4ed8;
+}
