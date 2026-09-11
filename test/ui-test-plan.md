@@ -340,9 +340,9 @@ Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
 
-### Test case: Find tasks by keyword
+### Test case: Find tasks with flexible search terms
 
-**Aim:** Verify that `find` matches partial descriptions without regard to case, preserves the original task numbers, and reports when there are no matches.
+**Aim:** Verify that `find` matches multiple partial terms without regard to case or term order, preserves the original task numbers, and reports when there are no matches.
 
 **Command:**
 
@@ -356,7 +356,7 @@ sh -c 'rm -f _temp/level9-test-data.txt && exec ./gradlew --quiet --no-daemon --
 todo read book
 deadline return book /by 2019-12-06
 event planning /from 2019-12-07 0900 /to 2019-12-07 1000
-find BOOK
+find BOO urn
 find xyz
 bye
 ```
@@ -391,7 +391,6 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  Here are the matching tasks in your list:
- 1.[T][ ] read book
  2.[D][ ] return book (by: Dec 06 2019)
 ____________________________________________________________
 ____________________________________________________________

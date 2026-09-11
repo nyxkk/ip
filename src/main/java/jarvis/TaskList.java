@@ -75,20 +75,25 @@ public class TaskList {
     }
 
     /**
-     * Returns one-based positions of tasks whose descriptions contain a keyword.
+     * Returns one-based positions of tasks whose descriptions contain every search term.
      *
-     * @param keyword the text to search for
+     * <p>Terms are matched case-insensitively as partial text and may appear in any order.
+     *
+     * @param query the space-separated search terms
      * @return the matching one-based task positions
      */
-    public List<Integer> find(String keyword) {
-        String normalizedKeyword = keyword.toLowerCase(Locale.ROOT);
+    public List<Integer> find(String query) {
+        List<String> normalizedTerms = List.of(query.toLowerCase(Locale.ROOT).split("\\s+"));
         return IntStream.range(0, tasks.size())
-                .filter(index -> tasks.get(index).getDescription()
-                        .toLowerCase(Locale.ROOT)
-                        .contains(normalizedKeyword))
+                .filter(index -> matchesAllTerms(tasks.get(index), normalizedTerms))
                 .map(index -> index + 1)
                 .boxed()
                 .toList();
+    }
+
+    private boolean matchesAllTerms(Task task, List<String> normalizedTerms) {
+        String normalizedDescription = task.getDescription().toLowerCase(Locale.ROOT);
+        return normalizedTerms.stream().allMatch(normalizedDescription::contains);
     }
 
     private int toIndex(int oneBasedPosition) {

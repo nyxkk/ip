@@ -74,9 +74,15 @@ java -jar build/libs/jarvis.jar
 
 ## Finding tasks
 
-Use `find <keyword>` to display tasks whose descriptions contain the keyword.
-The search is case-insensitive and keeps the original task numbers.
+Use `find <terms>` to display tasks whose descriptions contain every search
+term. Matching is case-insensitive, accepts partial terms, and does not depend
+on the order of the terms. Results keep their original task numbers.
 
 ```text
 find book
+find BOO urn
 ```
+
+The second example matches a task such as `return book`: `BOO` partially
+matches `book`, while `urn` partially matches `return` even though the search
+terms are entered in a different order.
