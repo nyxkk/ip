@@ -24,6 +24,9 @@ public class Task {
      * @param type the task category
      */
     protected Task(String description, TaskType type) {
+        assert description != null : "task description should not be null";
+        assert !description.isBlank() : "task description should not be blank";
+        assert type != null : "task type should not be null";
         this.description = description;
         this.type = type;
         this.isDone = false;
