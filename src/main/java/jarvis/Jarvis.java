@@ -81,41 +81,42 @@ public class Jarvis {
         return switch (command.getType()) {
             case LIST -> ui.getTasksMessage(tasks);
             case FIND -> ui.getMatchingTasksMessage(tasks, command.getDescription());
-            case MARK -> {
-                Task task = tasks.get(command.getTaskNumber());
-                task.markAsDone();
-                saveTasks(tasks);
-                yield ui.getMarkedMessage(task);
-            }
-            case UNMARK -> {
-                Task task = tasks.get(command.getTaskNumber());
-                task.markAsUndone();
-                saveTasks(tasks);
-                yield ui.getUnmarkedMessage(task);
-            }
-            case DELETE -> {
-                Task removedTask = tasks.remove(command.getTaskNumber());
-                saveTasks(tasks);
-                yield ui.getDeletedMessage(removedTask, tasks.size());
-            }
-            case TODO -> {
-                tasks.add(new Todo(command.getDescription()));
-                saveTasks(tasks);
-                yield ui.getTaskAddedMessage(tasks.get(tasks.size()), tasks.size());
-            }
-            case DEADLINE -> {
-                tasks.add(new Deadline(command.getDescription(), command.getFirstDetail()));
-                saveTasks(tasks);
-                yield ui.getTaskAddedMessage(tasks.get(tasks.size()), tasks.size());
-            }
-            case EVENT -> {
-                tasks.add(new Event(command.getDescription(), command.getFirstDetail(),
-                        command.getSecondDetail()));
-                saveTasks(tasks);
-                yield ui.getTaskAddedMessage(tasks.get(tasks.size()), tasks.size());
-            }
+            case MARK -> markTask(command.getTaskNumber());
+            case UNMARK -> unmarkTask(command.getTaskNumber());
+            case DELETE -> deleteTask(command.getTaskNumber());
+            case TODO -> addTask(new Todo(command.getDescription()));
+            case DEADLINE -> addTask(new Deadline(command.getDescription(),
+                    command.getFirstDetail()));
+            case EVENT -> addTask(new Event(command.getDescription(), command.getFirstDetail(),
+                    command.getSecondDetail()));
             case BYE -> throw new AssertionError("bye is handled before execution");
         };
+    }
+
+    private String markTask(int taskNumber) {
+        Task task = tasks.get(taskNumber);
+        task.markAsDone();
+        saveTasks(tasks);
+        return ui.getMarkedMessage(task);
+    }
+
+    private String unmarkTask(int taskNumber) {
+        Task task = tasks.get(taskNumber);
+        task.markAsUndone();
+        saveTasks(tasks);
+        return ui.getUnmarkedMessage(task);
+    }
+
+    private String deleteTask(int taskNumber) {
+        Task removedTask = tasks.remove(taskNumber);
+        saveTasks(tasks);
+        return ui.getDeletedMessage(removedTask, tasks.size());
+    }
+
+    private String addTask(Task task) {
+        tasks.add(task);
+        saveTasks(tasks);
+        return ui.getTaskAddedMessage(task, tasks.size());
     }
 
     private void saveTasks(TaskList tasks) {

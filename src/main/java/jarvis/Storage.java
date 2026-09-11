@@ -71,32 +71,49 @@ public class Storage {
     private Task parseTask(String line, int lineNumber) {
         String[] fields = line.split(" \\| ", -1);
         try {
-            TaskType type = TaskType.fromCode(fields[0]);
-            Task task = switch (type) {
-                case TODO -> requireFieldCount(fields, 3, lineNumber,
-                        new Todo(fields[2]));
-                case DEADLINE -> requireFieldCount(fields, 4, lineNumber,
-                        new Deadline(fields[2], fields[3]));
-                case EVENT -> requireFieldCount(fields, 5, lineNumber,
-                        new Event(fields[2], fields[3], fields[4]));
-                case GENERIC -> throw new JarvisException("The save file contains an invalid task type.");
-            };
-            if ("1".equals(fields[1])) {
-                task.markAsDone();
-            } else if (!"0".equals(fields[1])) {
-                throw new JarvisException("The save file contains an invalid completion status.");
-            }
+            Task task = createTask(fields, lineNumber);
+            restoreCompletionStatus(task, fields[1]);
             return task;
         } catch (ArrayIndexOutOfBoundsException exception) {
-            throw new JarvisException("The save file is malformed on line " + lineNumber + ".");
+            throw malformedLine(lineNumber);
         }
     }
 
-    private Task requireFieldCount(String[] fields, int expectedCount, int lineNumber, Task task) {
-        if (fields.length != expectedCount || fields[2].isBlank()) {
-            throw new JarvisException("The save file is malformed on line " + lineNumber + ".");
+    private Task createTask(String[] fields, int lineNumber) {
+        TaskType type = TaskType.fromCode(fields[0]);
+        return switch (type) {
+            case TODO -> {
+                requireFieldCount(fields, 3, lineNumber);
+                yield new Todo(fields[2]);
+            }
+            case DEADLINE -> {
+                requireFieldCount(fields, 4, lineNumber);
+                yield new Deadline(fields[2], fields[3]);
+            }
+            case EVENT -> {
+                requireFieldCount(fields, 5, lineNumber);
+                yield new Event(fields[2], fields[3], fields[4]);
+            }
+            case GENERIC -> throw new JarvisException("The save file contains an invalid task type.");
+        };
+    }
+
+    private void restoreCompletionStatus(Task task, String status) {
+        if ("1".equals(status)) {
+            task.markAsDone();
+        } else if (!"0".equals(status)) {
+            throw new JarvisException("The save file contains an invalid completion status.");
         }
-        return task;
+    }
+
+    private void requireFieldCount(String[] fields, int expectedCount, int lineNumber) {
+        if (fields.length != expectedCount || fields[2].isBlank()) {
+            throw malformedLine(lineNumber);
+        }
+    }
+
+    private JarvisException malformedLine(int lineNumber) {
+        return new JarvisException("The save file is malformed on line " + lineNumber + ".");
     }
 
     private String formatTask(Task task) {
