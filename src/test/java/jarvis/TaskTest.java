@@ -2,6 +2,7 @@ package jarvis;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,11 @@ public class TaskTest {
         assertFalse(task.isDone());
         assertEquals(TaskType.TODO, task.getType());
         assertEquals("[T][ ] read book", task.toString());
+    }
+
+    @Test
+    public void constructor_blankDescription_assertionThrown() {
+        assertThrows(AssertionError.class, () -> new Todo(" "));
     }
 
     @Test

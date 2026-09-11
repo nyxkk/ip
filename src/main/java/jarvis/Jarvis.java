@@ -75,6 +75,9 @@ public class Jarvis {
     }
 
     private String execute(ParsedCommand command) {
+        assert command != null : "command to execute should not be null";
+        assert command.getType() != ParsedCommand.Type.BYE
+                : "bye should be handled before command execution";
         return switch (command.getType()) {
             case LIST -> ui.getTasksMessage(tasks);
             case FIND -> ui.getMatchingTasksMessage(tasks, command.getDescription());
