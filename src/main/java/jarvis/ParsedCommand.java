@@ -8,7 +8,7 @@ public final class ParsedCommand {
         BYE,
         /** Displays all stored tasks. */
         LIST,
-        /** Finds tasks whose descriptions contain a keyword. */
+        /** Finds tasks whose descriptions contain the search terms. */
         FIND,
         /** Marks a task as complete. */
         MARK,
@@ -71,13 +71,13 @@ public final class ParsedCommand {
     }
 
     /**
-     * Creates a command that searches task descriptions for a keyword.
+     * Creates a command that searches task descriptions for one or more terms.
      *
-     * @param keyword the text to search for
+     * @param query the space-separated search terms
      * @return the structured find command
      */
-    public static ParsedCommand find(String keyword) {
-        return new ParsedCommand(Type.FIND, keyword, "", "", 0);
+    public static ParsedCommand find(String query) {
+        return new ParsedCommand(Type.FIND, query, "", "", 0);
     }
 
     /**

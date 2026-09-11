@@ -50,4 +50,14 @@ public class TaskListTest {
 
         assertEquals(List.of(1, 3), tasks.find("book"));
     }
+
+    @Test
+    public void find_multiplePartialTerms_matchesDescriptionsInAnyOrder() {
+        TaskList tasks = new TaskList(List.of(
+                new Todo("read book"),
+                new Todo("return BOOK"),
+                new Todo("book return form")));
+
+        assertEquals(List.of(2, 3), tasks.find("BOO urn"));
+    }
 }

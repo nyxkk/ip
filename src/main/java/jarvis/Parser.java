@@ -19,11 +19,11 @@ public class Parser {
         } else if (command.equals("list")) {
             return ParsedCommand.simple(ParsedCommand.Type.LIST);
         } else if (command.equals("find") || command.startsWith("find ")) {
-            String keyword = command.substring(4).trim();
-            if (keyword.isEmpty()) {
+            String query = command.substring(4).trim();
+            if (query.isEmpty()) {
                 throw new JarvisException("A find command must include a keyword.");
             }
-            return ParsedCommand.find(keyword);
+            return ParsedCommand.find(query);
         } else if (command.startsWith("mark ")) {
             return ParsedCommand.forTask(ParsedCommand.Type.MARK,
                     parseTaskNumber(command.substring(5)));

@@ -30,10 +30,10 @@ public class ParserTest {
 
     @Test
     public void parse_findCommand_returnsKeyword() {
-        ParsedCommand command = parser.parse("find Book");
+        ParsedCommand command = parser.parse("find Book return");
 
         assertEquals(ParsedCommand.Type.FIND, command.getType());
-        assertEquals("Book", command.getDescription());
+        assertEquals("Book return", command.getDescription());
     }
 
     @Test

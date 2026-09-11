@@ -96,25 +96,25 @@ public class Ui {
     }
 
     /**
-     * Displays tasks whose descriptions contain the supplied keyword.
+     * Displays tasks whose descriptions contain all supplied search terms.
      *
      * @param tasks the tasks to search
-     * @param keyword the text to search for
+     * @param query the space-separated search terms
      */
-    public void showMatchingTasks(TaskList tasks, String keyword) {
-        System.out.println(getMatchingTasksMessage(tasks, keyword));
+    public void showMatchingTasks(TaskList tasks, String query) {
+        System.out.println(getMatchingTasksMessage(tasks, query));
     }
 
     /**
-     * Formats the tasks whose descriptions contain the supplied keyword.
+     * Formats the tasks whose descriptions contain all supplied search terms.
      *
      * @param tasks the tasks to search
-     * @param keyword the text to search for
+     * @param query the space-separated search terms
      * @return the formatted matching tasks
      */
-    public String getMatchingTasksMessage(TaskList tasks, String keyword) {
+    public String getMatchingTasksMessage(TaskList tasks, String query) {
         StringBuilder message = new StringBuilder(" Here are the matching tasks in your list:");
-        List<Integer> matchingPositions = tasks.find(keyword);
+        List<Integer> matchingPositions = tasks.find(query);
         if (matchingPositions.isEmpty()) {
             return message.append("\n No matching tasks found.").toString();
         }

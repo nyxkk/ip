@@ -1,30 +1,20 @@
 # Jarvis User Guide
 
-// Update the title above to match the actual product name
+Jarvis is a desktop chatbot that helps you record and manage tasks.
 
-// Product screenshot goes here
+## Finding tasks
 
-// Product intro goes here
+Use `find <terms>` to display tasks whose descriptions contain every search
+term. Matching is case-insensitive, and each term can match part of a word.
+The terms may appear in any order in the task description.
 
-## Adding deadlines
+For example:
 
-// Describe the action and its outcome.
-
-// Give examples of usage
-
-Example: `keyword (optional arguments)`
-
-// A description of the expected outcome goes here
-
-```
-expected output
+```text
+find BOO urn
 ```
 
-## Feature ABC
-
-// Feature details
-
-
-## Feature XYZ
-
-// Feature details
+This finds a task such as `return book` because `BOO` partially matches
+`book`, and `urn` partially matches `return`. Matching tasks retain their
+original task numbers. Jarvis reports `No matching tasks found.` when no task
+contains all the terms.
