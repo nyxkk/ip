@@ -3,6 +3,7 @@ package jarvis;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.IntStream;
 
 /** Owns Jarvis' tasks and the operations that change the task list. */
 public class TaskList {
@@ -79,14 +80,13 @@ public class TaskList {
      */
     public List<Integer> find(String keyword) {
         String normalizedKeyword = keyword.toLowerCase(Locale.ROOT);
-        ArrayList<Integer> matchingPositions = new ArrayList<>();
-        for (int i = 0; i < tasks.size(); i++) {
-            String description = tasks.get(i).getDescription().toLowerCase(Locale.ROOT);
-            if (description.contains(normalizedKeyword)) {
-                matchingPositions.add(i + 1);
-            }
-        }
-        return List.copyOf(matchingPositions);
+        return IntStream.range(0, tasks.size())
+                .filter(index -> tasks.get(index).getDescription()
+                        .toLowerCase(Locale.ROOT)
+                        .contains(normalizedKeyword))
+                .map(index -> index + 1)
+                .boxed()
+                .toList();
     }
 
     private int toIndex(int oneBasedPosition) {
