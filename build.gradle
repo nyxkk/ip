@@ -1,6 +1,7 @@
 plugins {
     id 'application'
     id 'checkstyle'
+    id 'com.gradleup.shadow' version '9.5.1'
 }
 
 repositories {
@@ -48,9 +49,15 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 tasks.named('jar', Jar) {
+    manifest {
+        attributes('Main-Class': 'jarvis.Launcher')
+    }
+}
+
+tasks.named('shadowJar') {
     archiveFileName = 'jarvis.jar'
     manifest {
-        attributes('Main-Class': 'jarvis.Jarvis')
+        attributes('Main-Class': 'jarvis.Launcher')
     }
 }
 
