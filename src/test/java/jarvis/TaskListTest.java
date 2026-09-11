@@ -10,6 +10,13 @@ import org.junit.jupiter.api.Test;
 /** Tests one-based task lookup, deletion, and read-only task access. */
 public class TaskListTest {
     @Test
+    public void add_nullTask_assertionThrown() {
+        TaskList tasks = new TaskList();
+
+        assertThrows(AssertionError.class, () -> tasks.add(null));
+    }
+
+    @Test
     public void getAndRemove_validOneBasedPositions_returnExpectedTasks() {
         TaskList tasks = new TaskList(List.of(new Todo("first"), new Todo("second")));
 
