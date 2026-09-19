@@ -15,7 +15,7 @@ java {
 }
 
 application {
-    mainClass = 'jarvis.Launcher'
+    mainClass = 'jaylen.Launcher'
 }
 
 checkstyle {
@@ -26,17 +26,21 @@ dependencies {
     String javaFxVersion = '17.0.7'
     String junitVersion = '5.14.4'
 
+    // Use the native JavaFX runtime that matches this project's Apple Silicon release build.
+    // Windows and Linux runtimes remain bundled so the resulting fat JAR works on those OSes too.
+    String macClassifier = 'mac-aarch64'
+
     implementation "org.openjfx:javafx-base:${javaFxVersion}:win"
-    implementation "org.openjfx:javafx-base:${javaFxVersion}:mac"
+    implementation "org.openjfx:javafx-base:${javaFxVersion}:${macClassifier}"
     implementation "org.openjfx:javafx-base:${javaFxVersion}:linux"
     implementation "org.openjfx:javafx-controls:${javaFxVersion}:win"
-    implementation "org.openjfx:javafx-controls:${javaFxVersion}:mac"
+    implementation "org.openjfx:javafx-controls:${javaFxVersion}:${macClassifier}"
     implementation "org.openjfx:javafx-controls:${javaFxVersion}:linux"
     implementation "org.openjfx:javafx-fxml:${javaFxVersion}:win"
-    implementation "org.openjfx:javafx-fxml:${javaFxVersion}:mac"
+    implementation "org.openjfx:javafx-fxml:${javaFxVersion}:${macClassifier}"
     implementation "org.openjfx:javafx-fxml:${javaFxVersion}:linux"
     implementation "org.openjfx:javafx-graphics:${javaFxVersion}:win"
-    implementation "org.openjfx:javafx-graphics:${javaFxVersion}:mac"
+    implementation "org.openjfx:javafx-graphics:${javaFxVersion}:${macClassifier}"
     implementation "org.openjfx:javafx-graphics:${javaFxVersion}:linux"
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
@@ -50,14 +54,14 @@ tasks.withType(JavaCompile).configureEach {
 
 tasks.named('jar', Jar) {
     manifest {
-        attributes('Main-Class': 'jarvis.Launcher')
+        attributes('Main-Class': 'jaylen.Launcher')
     }
 }
 
 tasks.named('shadowJar') {
-    archiveFileName = 'jarvis.jar'
+    archiveFileName = 'jaylen.jar'
     manifest {
-        attributes('Main-Class': 'jarvis.Launcher')
+        attributes('Main-Class': 'jaylen.Launcher')
     }
 }
 
@@ -75,7 +79,7 @@ tasks.named('test', Test) {
 
 tasks.named('run', JavaExec) {
     enableAssertions = true
-    systemProperty 'jarvis.storage', System.getProperty('jarvis.storage', 'data/jarvis.txt')
+    systemProperty 'jaylen.storage', System.getProperty('jaylen.storage', 'data/jaylen.txt')
     jvmArgs '-Dfile.encoding=UTF-8', '-Dstdout.encoding=UTF-8'
 }
 
@@ -83,9 +87,9 @@ tasks.register('runConsole', JavaExec) {
     group = 'application'
     description = 'Runs the original console interface for testing.'
     classpath = sourceSets.main.runtimeClasspath
-    mainClass = 'jarvis.Jarvis'
+    mainClass = 'jaylen.Jaylen'
     standardInput = System.in
     enableAssertions = true
-    systemProperty 'jarvis.storage', System.getProperty('jarvis.storage', 'data/jarvis.txt')
+    systemProperty 'jaylen.storage', System.getProperty('jaylen.storage', 'data/jaylen.txt')
     jvmArgs '-Dfile.encoding=UTF-8', '-Dstdout.encoding=UTF-8'
 }

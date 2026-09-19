@@ -1,18 +1,16 @@
-package jarvis;
+package jaylen;
 
 import java.util.List;
 import java.util.Scanner;
 
-/** Formats Jarvis messages and handles interaction with the console user. */
+/** Formats Jaylen messages and handles interaction with the console user. */
 public class Ui {
     private static final String SEPARATOR = "_".repeat(60);
+    private static final String ERROR_PREFIX = " OOPS!!! ";
     private static final String BANNER = """
-                 ██╗ █████╗ ██████╗ ██╗   ██╗██╗███████╗
-                 ██║██╔══██╗██╔══██╗██║   ██║██║██╔════╝
-                 ██║███████║██████╔╝██║   ██║██║███████╗
-            ██   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║╚════██║
-            ╚█████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║███████║
-             ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝
+            ╔══════════════════════╗
+            ║        JAYLEN        ║
+            ╚══════════════════════╝
             """.stripTrailing();
 
     private final Scanner scanner;
@@ -22,10 +20,10 @@ public class Ui {
         scanner = new Scanner(System.in);
     }
 
-    /** Displays Jarvis' welcome message. */
+    /** Displays Jaylen's welcome message. */
     public void showWelcome() {
         showLine();
-        System.out.println(BANNER.substring(1));
+        System.out.println(BANNER);
         System.out.println(getWelcomeMessage());
         showLine();
     }
@@ -36,7 +34,7 @@ public class Ui {
      * @return the welcome text
      */
     public String getWelcomeMessage() {
-        return "Hello! I'm Jarvis.\nWhat can I do for you?";
+        return "Hello! I'm Jaylen.\nWhat can I do for you?";
     }
 
     /**
@@ -69,7 +67,17 @@ public class Ui {
      * @return the formatted error
      */
     public String getErrorMessage(String message) {
-        return " OOPS!!! " + message;
+        return ERROR_PREFIX + message;
+    }
+
+    /**
+     * Returns whether text is a formatted Jaylen error response.
+     *
+     * @param message the response to inspect
+     * @return {@code true} when the response begins with the error prefix
+     */
+    public boolean isErrorMessage(String message) {
+        return message != null && message.startsWith(ERROR_PREFIX);
     }
 
     /**
@@ -144,7 +152,7 @@ public class Ui {
     public String getTaskAddedMessage(Task task, int taskCount) {
         return " Got it. I've added this task:\n"
                 + "   " + task + "\n"
-                + " Now you have " + taskCount + " tasks in the list.";
+                + " Now you have " + formatTaskCount(taskCount) + " in the list.";
     }
 
     /**
@@ -205,7 +213,7 @@ public class Ui {
     public String getDeletedMessage(Task task, int remainingTasks) {
         return " Noted. I've removed this task:\n"
                 + "   " + task + "\n"
-                + " Now you have " + remainingTasks + " tasks in the list.";
+                + " Now you have " + formatTaskCount(remainingTasks) + " in the list.";
     }
 
     /** Displays the farewell message. */
@@ -220,5 +228,9 @@ public class Ui {
      */
     public String getGoodbyeMessage() {
         return "Bye. Hope to see you again soon!";
+    }
+
+    private String formatTaskCount(int taskCount) {
+        return taskCount + (taskCount == 1 ? " task" : " tasks");
     }
 }

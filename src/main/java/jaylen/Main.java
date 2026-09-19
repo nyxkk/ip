@@ -1,4 +1,4 @@
-package jarvis;
+package jaylen;
 
 import java.io.IOException;
 
@@ -8,16 +8,16 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-/** Displays Jarvis in a JavaFX window defined by FXML. */
+/** Displays Jaylen in a JavaFX window defined by FXML. */
 public class Main extends Application {
-    private final Jarvis jarvis = new Jarvis();
+    private final Jaylen jaylen = new Jaylen();
 
     /** Creates the JavaFX application. */
     public Main() {
     }
 
     /**
-     * Creates and displays the primary Jarvis window.
+     * Creates and displays the primary Jaylen window.
      *
      * @param stage the primary window supplied by JavaFX
      */
@@ -26,15 +26,15 @@ public class Main extends Application {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane root = loader.load();
-            loader.<MainWindow>getController().setJarvis(jarvis);
+            loader.<MainWindow>getController().setJaylen(jaylen);
 
-            stage.setTitle("Jarvis");
+            stage.setTitle("Jaylen");
             stage.setMinWidth(420);
             stage.setMinHeight(600);
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException exception) {
-            throw new RuntimeException("Unable to load the Jarvis window.", exception);
+            throw new RuntimeException("Unable to load the Jaylen window.", exception);
         }
     }
 }

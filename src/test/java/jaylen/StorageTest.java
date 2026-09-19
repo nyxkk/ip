@@ -1,4 +1,4 @@
-package jarvis;
+package jaylen;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 /** Tests persistence of task types, dates, and completion status. */
 public class StorageTest {
-    private static final String STORAGE_PROPERTY = "jarvis.storage";
+    private static final String STORAGE_PROPERTY = "jaylen.storage";
 
     @TempDir
     private Path temporaryDirectory;
@@ -69,8 +69,27 @@ public class StorageTest {
     public void loadMalformedFile_unsupportedType_throwsException() throws IOException {
         Files.writeString(storageFile, "X | 0 | unknown task");
 
-        JarvisException exception = assertThrows(JarvisException.class, () -> new Storage().load());
+        JaylenException exception = assertThrows(JaylenException.class, () -> new Storage().load());
 
         assertEquals("The save file contains an unknown task type.", exception.getMessage());
+    }
+
+    @Test
+    public void loadMalformedFile_invalidCompletionStatus_throwsException() throws IOException {
+        Files.writeString(storageFile, "T | yes | unknown task");
+
+        JaylenException exception = assertThrows(JaylenException.class, () -> new Storage().load());
+
+        assertEquals("The save file contains an invalid completion status.",
+                exception.getMessage());
+    }
+
+    @Test
+    public void loadMalformedFile_extraDelimiter_throwsException() throws IOException {
+        Files.writeString(storageFile, "T | 0 | compare A | B");
+
+        JaylenException exception = assertThrows(JaylenException.class, () -> new Storage().load());
+
+        assertEquals("The save file is malformed on line 1.", exception.getMessage());
     }
 }

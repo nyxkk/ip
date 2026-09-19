@@ -1,4 +1,4 @@
-package jarvis;
+package jaylen;
 
 import javafx.application.Application;
 
@@ -8,7 +8,7 @@ public final class Launcher {
     }
 
     /**
-     * Launches the Jarvis graphical interface.
+     * Launches the Jaylen graphical interface.
      *
      * @param args command-line arguments passed to JavaFX
      */

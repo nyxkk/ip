@@ -1,4 +1,4 @@
-package jarvis;
+package jaylen;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -51,7 +51,7 @@ public class Deadline extends Task {
                 parsedBy = DateTimeParser.parseDate(by).atStartOfDay();
                 parsedIncludesTime = false;
             } catch (DateTimeParseException dateException) {
-                throw new JarvisException("Use a date such as 2019-10-15 or "
+                throw new JaylenException("Use a date such as 2019-10-15 or "
                         + "a date and time such as 2/12/2019 1800.");
             }
         }

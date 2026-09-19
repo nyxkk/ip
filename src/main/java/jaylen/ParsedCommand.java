@@ -1,10 +1,10 @@
-package jarvis;
+package jaylen;
 
-/** The structured meaning of one line entered by a Jarvis user. */
+/** The structured meaning of one line entered by a Jaylen user. */
 public final class ParsedCommand {
-    /** The command forms understood by Jarvis. */
+    /** The command forms understood by Jaylen. */
     public enum Type {
-        /** Ends the current Jarvis session. */
+        /** Ends the current Jaylen session. */
         BYE,
         /** Displays all stored tasks. */
         LIST,

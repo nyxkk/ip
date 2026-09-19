@@ -1,6 +1,6 @@
-package jarvis;
+package jaylen;
 
-/** The finite set of task categories supported by Jarvis. */
+/** The finite set of task categories supported by Jaylen. */
 public enum TaskType {
     /** A task without a date or time. */
     TODO("[T]"),
@@ -40,14 +40,14 @@ public enum TaskType {
      *
      * @param code the one-letter task type code
      * @return the matching task type
-     * @throws JarvisException if the code is unknown
+     * @throws JaylenException if the code is unknown
      */
     public static TaskType fromCode(String code) {
         return switch (code) {
             case "T" -> TODO;
             case "D" -> DEADLINE;
             case "E" -> EVENT;
-            default -> throw new JarvisException("The save file contains an unknown task type.");
+            default -> throw new JaylenException("The save file contains an unknown task type.");
         };
     }
 }

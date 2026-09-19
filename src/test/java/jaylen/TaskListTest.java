@@ -1,4 +1,4 @@
-package jarvis;
+package jaylen;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -26,10 +26,20 @@ public class TaskListTest {
     }
 
     @Test
+    public void addAtPosition_removedTask_restoresOriginalOrder() {
+        TaskList tasks = new TaskList(List.of(new Todo("first"), new Todo("third")));
+
+        tasks.add(2, new Todo("second"));
+
+        assertEquals(List.of("first", "second", "third"),
+                tasks.getTasks().stream().map(Task::getDescription).toList());
+    }
+
+    @Test
     public void get_invalidPosition_throwsException() {
         TaskList tasks = new TaskList();
 
-        JarvisException exception = assertThrows(JarvisException.class, () -> tasks.get(1));
+        JaylenException exception = assertThrows(JaylenException.class, () -> tasks.get(1));
 
         assertEquals("That task number does not exist.", exception.getMessage());
     }

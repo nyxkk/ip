@@ -11,7 +11,7 @@ This file is the source of truth for console UI tests run with the `$test-ui` sk
 **Command:**
 
 ```text
-sh -c 'rm -f _temp/ui-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djarvis.storage=_temp/ui-test-data.txt'
+sh -c 'rm -f _temp/ui-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djaylen.storage=_temp/ui-test-data.txt'
 ```
 
 **Input:**
@@ -29,19 +29,16 @@ bye
 
 ```text
 ____________________________________________________________
-    ██╗ █████╗ ██████╗ ██╗   ██╗██╗███████╗
-     ██║██╔══██╗██╔══██╗██║   ██║██║██╔════╝
-     ██║███████║██████╔╝██║   ██║██║███████╗
-██   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║╚════██║
-╚█████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║███████║
- ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝
-Hello! I'm Jarvis.
+╔══════════════════════╗
+║        JAYLEN        ║
+╚══════════════════════╝
+Hello! I'm Jaylen.
 What can I do for you?
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
    [T][ ] borrow book
- Now you have 1 tasks in the list.
+ Now you have 1 task in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
@@ -77,7 +74,7 @@ ____________________________________________________________
 **Command:**
 
 ```text
-sh -c 'rm -f _temp/level8-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djarvis.storage=_temp/level8-test-data.txt'
+sh -c 'rm -f _temp/level8-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djaylen.storage=_temp/level8-test-data.txt'
 ```
 
 **Input:**
@@ -93,19 +90,16 @@ bye
 
 ```text
 ____________________________________________________________
-    ██╗ █████╗ ██████╗ ██╗   ██╗██╗███████╗
-     ██║██╔══██╗██╔══██╗██║   ██║██║██╔════╝
-     ██║███████║██████╔╝██║   ██║██║███████╗
-██   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║╚════██║
-╚█████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║███████║
- ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝
-Hello! I'm Jarvis.
+╔══════════════════════╗
+║        JAYLEN        ║
+╚══════════════════════╝
+Hello! I'm Jaylen.
 What can I do for you?
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
    [D][ ] return book (by: Dec 02 2019 18:00)
- Now you have 1 tasks in the list.
+ Now you have 1 task in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
@@ -124,12 +118,12 @@ ____________________________________________________________
 
 ### Test case: Save tasks and load them after restarting
 
-**Aim:** Verify that tasks and completion status are written to disk and restored when Jarvis starts again. The command creates a clean temporary save file, runs a first session, then starts a second session using that file.
+**Aim:** Verify that tasks and completion status are written to disk and restored when Jaylen starts again. The command creates a clean temporary save file, runs a first session, then starts a second session using that file.
 
 **Command:**
 
 ```text
-sh -c 'rm -f _temp/level7-test-data.txt; printf "todo persisted task\\ndeadline submit report /by 2019-12-06\\nevent planning /from 2019-12-07 0900 /to 2019-12-07 1000\\nmark 2\\nbye\\n" | ./gradlew --quiet --no-daemon --console=plain runConsole -Djarvis.storage=_temp/level7-test-data.txt >/dev/null; exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djarvis.storage=_temp/level7-test-data.txt'
+sh -c 'rm -f _temp/level7-test-data.txt; printf "todo persisted task\\ndeadline submit report /by 2019-12-06\\nevent planning /from 2019-12-07 0900 /to 2019-12-07 1000\\nmark 2\\nbye\\n" | ./gradlew --quiet --no-daemon --console=plain runConsole -Djaylen.storage=_temp/level7-test-data.txt >/dev/null; exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djaylen.storage=_temp/level7-test-data.txt'
 ```
 
 **Input:**
@@ -143,13 +137,10 @@ bye
 
 ```text
 ____________________________________________________________
-    ██╗ █████╗ ██████╗ ██╗   ██╗██╗███████╗
-     ██║██╔══██╗██╔══██╗██║   ██║██║██╔════╝
-     ██║███████║██████╔╝██║   ██║██║███████╗
-██   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║╚════██║
-╚█████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║███████║
- ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝
-Hello! I'm Jarvis.
+╔══════════════════════╗
+║        JAYLEN        ║
+╚══════════════════════╝
+Hello! I'm Jaylen.
 What can I do for you?
 ____________________________________________________________
 ____________________________________________________________
@@ -165,12 +156,12 @@ ____________________________________________________________
 
 ### Test case: Handle invalid input without crashing
 
-**Aim:** Verify that empty, unknown, malformed, and out-of-range commands produce user-friendly errors and that Jarvis continues accepting commands.
+**Aim:** Verify that empty, unknown, malformed, and out-of-range commands produce user-friendly errors and that Jaylen continues accepting commands.
 
 **Command:**
 
 ```text
-sh -c 'rm -f _temp/ui-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djarvis.storage=_temp/ui-test-data.txt'
+sh -c 'rm -f _temp/ui-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djaylen.storage=_temp/ui-test-data.txt'
 ```
 
 **Input:**
@@ -191,13 +182,10 @@ bye
 
 ```text
 ____________________________________________________________
-    ██╗ █████╗ ██████╗ ██╗   ██╗██╗███████╗
-     ██║██╔══██╗██╔══██╗██║   ██║██║██╔════╝
-     ██║███████║██████╔╝██║   ██║██║███████╗
-██   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║╚════██║
-╚█████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║███████║
- ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝
-Hello! I'm Jarvis.
+╔══════════════════════╗
+║        JAYLEN        ║
+╚══════════════════════╝
+Hello! I'm Jaylen.
 What can I do for you?
 ____________________________________________________________
 ____________________________________________________________
@@ -221,7 +209,7 @@ ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
    [T][ ] buy milk
- Now you have 1 tasks in the list.
+ Now you have 1 task in the list.
 ____________________________________________________________
 ____________________________________________________________
  OOPS!!! That task number does not exist.
@@ -231,45 +219,75 @@ Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
 
-## Test case template
+### Test case: Reject malformed commands and normalize whitespace
 
-### Test case: Replace with a short name
-
-**Aim:** State the UI behavior this test verifies.
+**Aim:** Verify that commands missing required values, reversed event times, and
+storage-delimiter characters produce specific errors without crashing. Also verify
+that repeated whitespace is normalized and `mark`/`unmark` still work afterward.
 
 **Command:**
 
 ```text
-# Command that launches the program
+sh -c 'rm -f _temp/error-handling-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djaylen.storage=_temp/error-handling-test-data.txt'
 ```
 
 **Input:**
 
 ```text
-# Exact text entered into the console, including each line
+delete
+deadline /by 2026-09-25
+event reversed /from 2026-09-21 1600 /to 2026-09-21 1400
+todo compare A | B
+todo    spaced    task
+mark 1
+unmark 1
+list
+bye
 ```
 
 **Expected output:**
 
 ```text
-# Exact console output produced by the program
+____________________________________________________________
+╔══════════════════════╗
+║        JAYLEN        ║
+╚══════════════════════╝
+Hello! I'm Jaylen.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! A delete command must include a task number.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! The description of a deadline cannot be empty.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! The event end time must be after the start time.
+____________________________________________________________
+____________________________________________________________
+ OOPS!!! Task descriptions cannot contain the | character.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
+   [T][ ] spaced task
+ Now you have 1 task in the list.
+____________________________________________________________
+____________________________________________________________
+ Nice! I've marked this task as done:
+   [T][X] spaced task
+____________________________________________________________
+____________________________________________________________
+ OK, I've marked this task as not done yet:
+   [T][ ] spaced task
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][ ] spaced task
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
 ```
-
-## Test-session record format
-
-When the skill is run, it should show this information in its response for every completed test case:
-
-```text
-Test case: <name>
-Aim: <aim>
-Console input:
-<input>
-Console output:
-<output>
-Result: PASS | FAIL
-```
-
-For a failure, the record must also include the expected output and the session must end without running remaining test cases.
 
 ### Test case: Delete a task and keep list numbering contiguous
 
@@ -278,7 +296,7 @@ For a failure, the record must also include the expected output and the session 
 **Command:**
 
 ```text
-sh -c 'rm -f _temp/ui-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djarvis.storage=_temp/ui-test-data.txt'
+sh -c 'rm -f _temp/ui-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djaylen.storage=_temp/ui-test-data.txt'
 ```
 
 **Input:**
@@ -297,19 +315,16 @@ bye
 
 ```text
 ____________________________________________________________
-    ██╗ █████╗ ██████╗ ██╗   ██╗██╗███████╗
-     ██║██╔══██╗██╔══██╗██║   ██║██║██╔════╝
-     ██║███████║██████╔╝██║   ██║██║███████╗
-██   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║╚════██║
-╚█████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║███████║
- ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝
-Hello! I'm Jarvis.
+╔══════════════════════╗
+║        JAYLEN        ║
+╚══════════════════════╝
+Hello! I'm Jaylen.
 What can I do for you?
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
    [T][ ] first task
- Now you have 1 tasks in the list.
+ Now you have 1 task in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
@@ -347,7 +362,7 @@ ____________________________________________________________
 **Command:**
 
 ```text
-sh -c 'rm -f _temp/level9-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djarvis.storage=_temp/level9-test-data.txt'
+sh -c 'rm -f _temp/level9-test-data.txt && exec ./gradlew --quiet --no-daemon --console=plain runConsole -Djaylen.storage=_temp/level9-test-data.txt'
 ```
 
 **Input:**
@@ -365,19 +380,16 @@ bye
 
 ```text
 ____________________________________________________________
-    ██╗ █████╗ ██████╗ ██╗   ██╗██╗███████╗
-     ██║██╔══██╗██╔══██╗██║   ██║██║██╔════╝
-     ██║███████║██████╔╝██║   ██║██║███████╗
-██   ██║██╔══██║██╔══██╗╚██╗ ██╔╝██║╚════██║
-╚█████╔╝██║  ██║██║  ██║ ╚████╔╝ ██║███████║
- ╚════╝ ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝
-Hello! I'm Jarvis.
+╔══════════════════════╗
+║        JAYLEN        ║
+╚══════════════════════╝
+Hello! I'm Jaylen.
 What can I do for you?
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
    [T][ ] read book
- Now you have 1 tasks in the list.
+ Now you have 1 task in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:

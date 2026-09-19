@@ -1,4 +1,4 @@
-package jarvis;
+package jaylen;
 
 /**
  * Represents one task and whether it has been completed.
@@ -27,6 +27,9 @@ public class Task {
         assert description != null : "task description should not be null";
         assert !description.isBlank() : "task description should not be blank";
         assert type != null : "task type should not be null";
+        if (description.contains("|")) {
+            throw new JaylenException("Task descriptions cannot contain the | character.");
+        }
         this.description = description;
         this.type = type;
         this.isDone = false;
@@ -79,7 +82,7 @@ public class Task {
     }
 
     /**
-     * Returns this task in the format used in Jarvis' task list.
+     * Returns this task in the format used in Jaylen's task list.
      *
      * @return the task's status and description
      */

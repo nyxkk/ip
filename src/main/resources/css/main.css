@@ -5,7 +5,7 @@
 
 .dialog-scroll-pane,
 .dialog-scroll-pane > .viewport {
-    -fx-background-color: #f3f4f6;
+    -fx-background-color: #f8fafc;
 }
 
 .dialog-scroll-pane {
@@ -15,8 +15,8 @@
 
 .avatar {
     -fx-background-color: #374151;
-    -fx-background-radius: 21;
-    -fx-font-size: 13px;
+    -fx-background-radius: 17;
+    -fx-font-size: 12px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
 }
@@ -40,10 +40,26 @@
     -fx-border-color: #93c5fd;
 }
 
+.error-dialog .avatar {
+    -fx-background-color: #b91c1c;
+}
+
+.error-dialog .dialog-label {
+    -fx-background-color: #fee2e2;
+    -fx-border-color: #f87171;
+    -fx-text-fill: #7f1d1d;
+}
+
 .command-field {
     -fx-background-radius: 8;
+    -fx-border-color: transparent;
+    -fx-border-radius: 8;
     -fx-font-size: 14px;
     -fx-pref-height: 38px;
+}
+
+.command-field:focused {
+    -fx-border-color: #60a5fa;
 }
 
 .send-button {

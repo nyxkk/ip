@@ -1,4 +1,4 @@
-package jarvis;
+package jaylen;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -8,7 +8,7 @@ import java.time.format.ResolverStyle;
 import java.util.List;
 import java.util.Locale;
 
-/** Parses and formats the date and time values used by Jarvis tasks. */
+/** Parses and formats the date and time values used by Jaylen tasks. */
 public final class DateTimeParser {
     private static final DateTimeFormatter DISPLAY_DATE =
             DateTimeFormatter.ofPattern("MMM dd uuuu", Locale.ENGLISH);
@@ -66,7 +66,7 @@ public final class DateTimeParser {
     }
 
     /**
-     * Formats a date for display to a Jarvis user.
+     * Formats a date for display to a Jaylen user.
      *
      * @param date the date to format
      * @return the formatted date
@@ -76,7 +76,7 @@ public final class DateTimeParser {
     }
 
     /**
-     * Formats a date and time for display to a Jarvis user.
+     * Formats a date and time for display to a Jaylen user.
      *
      * @param dateTime the date and time to format
      * @return the formatted date and time

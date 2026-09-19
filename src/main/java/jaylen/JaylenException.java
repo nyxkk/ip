@@ -1,7 +1,7 @@
-package jarvis;
+package jaylen;
 
-/** Represents an input error that can be explained to a Jarvis user. */
-public class JarvisException extends RuntimeException {
+/** Represents an input error that can be explained to a Jaylen user. */
+public class JaylenException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -9,7 +9,7 @@ public class JarvisException extends RuntimeException {
      *
      * @param message the explanation shown to the user
      */
-    public JarvisException(String message) {
+    public JaylenException(String message) {
         super(message);
     }
 }

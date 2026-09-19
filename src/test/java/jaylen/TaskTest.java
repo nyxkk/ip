@@ -1,4 +1,4 @@
-package jarvis;
+package jaylen;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -21,6 +21,14 @@ public class TaskTest {
     @Test
     public void constructor_blankDescription_assertionThrown() {
         assertThrows(AssertionError.class, () -> new Todo(" "));
+    }
+
+    @Test
+    public void constructor_descriptionContainingDelimiter_throwsException() {
+        JaylenException exception = assertThrows(JaylenException.class, () ->
+                new Todo("compare A | B"));
+
+        assertEquals("Task descriptions cannot contain the | character.", exception.getMessage());
     }
 
     @Test

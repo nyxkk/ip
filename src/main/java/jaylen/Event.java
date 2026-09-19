@@ -1,4 +1,4 @@
-package jarvis;
+package jaylen;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
@@ -17,6 +17,11 @@ public class Event extends Task {
      */
     public Event(String description, LocalDateTime from, LocalDateTime to) {
         super(description, TaskType.EVENT);
+        assert from != null : "event start should not be null";
+        assert to != null : "event end should not be null";
+        if (!from.isBefore(to)) {
+            throw new JaylenException("The event end time must be after the start time.");
+        }
         this.from = from;
         this.to = to;
     }
@@ -60,7 +65,7 @@ public class Event extends Task {
         try {
             return DateTimeParser.parseDateTime(text);
         } catch (DateTimeParseException exception) {
-            throw new JarvisException("Use event times such as 2019-10-15 1800.");
+            throw new JaylenException("Use event times such as 2019-10-15 1800.");
         }
     }
 }

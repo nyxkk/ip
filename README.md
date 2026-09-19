@@ -1,6 +1,7 @@
-# Jarvis project template
+# Jaylen
 
-This is a project template for a greenfield Java project. It is now named _Jarvis_. Given below are instructions on how to use it.
+Jaylen is a JavaFX task assistant developed for the CS2103/T individual project.
+See the [User Guide](docs/README.md) for the supported commands.
 
 ## Setting up in Intellij
 
@@ -13,9 +14,9 @@ Prerequisites: JDK 25, update Intellij to the most recent version.
    1. If there are any further prompts, accept the defaults.
 1. Configure the project to use **JDK 25** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
    In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate `src/main/java/jarvis/Launcher.java`, right-click it, and choose
+1. After that, locate `src/main/java/jaylen/Launcher.java`, right-click it, and choose
    `Run Launcher.main()` (if the code editor is showing compile errors, try restarting
-   the IDE). If the setup is correct, the Jarvis chat window will open.
+   the IDE). If the setup is correct, the Jaylen chat window will open.
 
 **Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
 
@@ -30,11 +31,11 @@ needed. Use JDK 25, then run these commands from the project root:
 ```
 
 The `build` command compiles the project and runs its automated checks. The
-`run` command starts the Jarvis JavaFX interface. To use a different save file, pass
+`run` command starts the Jaylen JavaFX interface. To use a different save file, pass
 it as a system property, for example:
 
 ```bash
-./gradlew run -Djarvis.storage=./data/jarvis.txt
+./gradlew run -Djaylen.storage=./data/jaylen.txt
 ```
 
 The original console interface remains available for automated testing:
@@ -65,11 +66,11 @@ To generate the HTML API documentation, use:
 
 The generated documentation is written to `build/docs/javadoc/`.
 
-To build and run the console interface from the executable JAR, use:
+To build the cross-platform executable JAR with its JavaFX dependencies, use:
 
 ```bash
-./gradlew jar
-java -jar build/libs/jarvis.jar
+./gradlew clean shadowJar
+java -jar build/libs/jaylen.jar
 ```
 
 ## Finding tasks
@@ -86,3 +87,10 @@ find BOO urn
 The second example matches a task such as `return book`: `BOO` partially
 matches `book`, while `urn` partially matches `return` even though the search
 terms are entered in a different order.
+
+## Acknowledgements
+
+Jaylen was developed from the NUS CS2103/T individual-project starter template.
+OpenAI Codex assisted with the Week 6 GUI, error-handling, testing, and
+documentation improvements; the generated changes were reviewed and tested by
+the project author.

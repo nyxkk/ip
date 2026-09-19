@@ -13,13 +13,12 @@
     <children>
         <Label fx:id="avatar"
                alignment="CENTER"
-               minHeight="42.0"
-               minWidth="42.0"
-               prefHeight="42.0"
-               prefWidth="42.0"
+               minHeight="34.0"
+               minWidth="34.0"
+               prefHeight="34.0"
+               prefWidth="34.0"
                styleClass="avatar" />
         <Label fx:id="dialog"
-               maxWidth="300.0"
                minHeight="-Infinity"
                styleClass="dialog-label"
                wrapText="true" />

@@ -1,23 +1,28 @@
-package jarvis;
+package jaylen;
 
 /** A task assistant that can be used from either the console or JavaFX GUI. */
-public class Jarvis {
+public class Jaylen {
     private final Storage storage;
     private final Parser parser;
     private final Ui ui;
     private final TaskList tasks;
+    private String startupErrorMessage;
 
-    /** Creates Jarvis with its user interface, parser, and file storage components. */
-    public Jarvis() {
-        storage = new Storage();
-        parser = new Parser();
+    /** Creates Jaylen with its user interface, parser, and file storage components. */
+    public Jaylen() {
         ui = new Ui();
+        parser = new Parser();
+        storage = new Storage();
         tasks = loadTasks();
     }
 
-    /** Starts Jarvis and processes commands until the user says goodbye. */
+    /** Starts Jaylen and processes commands until the user says goodbye. */
     public void run() {
         ui.showWelcome();
+        if (hasStartupError()) {
+            ui.showError(startupErrorMessage);
+            ui.showLine();
+        }
 
         while (true) {
             String input = ui.readCommand();
@@ -30,7 +35,7 @@ public class Jarvis {
                     return;
                 }
                 System.out.println(execute(command));
-            } catch (JarvisException exception) {
+            } catch (JaylenException exception) {
                 ui.showError(exception.getMessage());
             }
             ui.showLine();
@@ -38,10 +43,10 @@ public class Jarvis {
     }
 
     /**
-     * Processes one GUI command and returns the text Jarvis should display.
+     * Processes one GUI command and returns the text Jaylen should display.
      *
      * @param input the complete command entered by the user
-     * @return Jarvis' response to the command
+     * @return Jaylen's response to the command
      */
     public String getResponse(String input) {
         try {
@@ -50,7 +55,7 @@ public class Jarvis {
                 return ui.getGoodbyeMessage();
             }
             return execute(command);
-        } catch (JarvisException exception) {
+        } catch (JaylenException exception) {
             return ui.getErrorMessage(exception.getMessage());
         }
     }
@@ -58,18 +63,38 @@ public class Jarvis {
     /**
      * Returns the short welcome message displayed when the GUI opens.
      *
-     * @return Jarvis' welcome message
+     * @return Jaylen's welcome message
      */
     public String getWelcomeMessage() {
         return ui.getWelcomeMessage();
     }
 
-    /** Loads saved tasks, falling back to an empty list if loading fails. */
+    /**
+     * Returns the startup storage warning, or {@code null} when loading succeeded.
+     *
+     * @return the startup storage warning, or {@code null}
+     */
+    public String getStartupErrorMessage() {
+        return startupErrorMessage;
+    }
+
+    /**
+     * Returns whether a response represents a user-facing error.
+     *
+     * @param response the formatted response
+     * @return {@code true} when the response is an error
+     */
+    public boolean isErrorResponse(String response) {
+        return ui.isErrorMessage(response);
+    }
+
+    /** Loads saved tasks without risking replacement of a malformed save file. */
     private TaskList loadTasks() {
         try {
             return new TaskList(storage.load());
-        } catch (JarvisException exception) {
-            ui.showError(exception.getMessage());
+        } catch (JaylenException exception) {
+            startupErrorMessage = exception.getMessage()
+                    + " Your existing data will not be changed. Fix the save file and restart Jaylen.";
             return new TaskList();
         }
     }
@@ -94,33 +119,74 @@ public class Jarvis {
     }
 
     private String markTask(int taskNumber) {
+        ensureStorageAvailable();
         Task task = tasks.get(taskNumber);
+        boolean wasDone = task.isDone();
         task.markAsDone();
-        saveTasks(tasks);
+        try {
+            saveTasks(tasks);
+        } catch (JaylenException exception) {
+            if (!wasDone) {
+                task.markAsUndone();
+            }
+            throw exception;
+        }
         return ui.getMarkedMessage(task);
     }
 
     private String unmarkTask(int taskNumber) {
+        ensureStorageAvailable();
         Task task = tasks.get(taskNumber);
+        boolean wasDone = task.isDone();
         task.markAsUndone();
-        saveTasks(tasks);
+        try {
+            saveTasks(tasks);
+        } catch (JaylenException exception) {
+            if (wasDone) {
+                task.markAsDone();
+            }
+            throw exception;
+        }
         return ui.getUnmarkedMessage(task);
     }
 
     private String deleteTask(int taskNumber) {
+        ensureStorageAvailable();
         Task removedTask = tasks.remove(taskNumber);
-        saveTasks(tasks);
+        try {
+            saveTasks(tasks);
+        } catch (JaylenException exception) {
+            tasks.add(taskNumber, removedTask);
+            throw exception;
+        }
         return ui.getDeletedMessage(removedTask, tasks.size());
     }
 
     private String addTask(Task task) {
+        ensureStorageAvailable();
         tasks.add(task);
-        saveTasks(tasks);
+        try {
+            saveTasks(tasks);
+        } catch (JaylenException exception) {
+            tasks.remove(tasks.size());
+            throw exception;
+        }
         return ui.getTaskAddedMessage(task, tasks.size());
     }
 
     private void saveTasks(TaskList tasks) {
         storage.save(tasks.getTasks());
+    }
+
+    private void ensureStorageAvailable() {
+        if (hasStartupError()) {
+            throw new JaylenException("I can't change tasks because the save file could not be "
+                    + "loaded. Fix the file and restart Jaylen.");
+        }
+    }
+
+    private boolean hasStartupError() {
+        return startupErrorMessage != null;
     }
 
     /**
@@ -129,6 +195,6 @@ public class Jarvis {
      * @param args command-line arguments, currently unused
      */
     public static void main(String[] args) {
-        new Jarvis().run();
+        new Jaylen().run();
     }
 }

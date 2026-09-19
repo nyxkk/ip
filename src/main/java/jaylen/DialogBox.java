@@ -1,8 +1,10 @@
-package jarvis;
+package jaylen;
 
 import java.io.IOException;
 import java.util.Collections;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ObservableNumberValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,7 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
-/** Represents one user or Jarvis message in the conversation. */
+/** Represents one user or Jaylen message in the conversation. */
 public class DialogBox extends HBox {
     @FXML
     private Label avatar;
@@ -32,7 +34,9 @@ public class DialogBox extends HBox {
         }
 
         avatar.setText(avatarText);
+        avatar.setAccessibleText(avatarText + " avatar");
         dialog.setText(text);
+        dialog.setAccessibleText(text);
     }
 
     /** Places the user's avatar on the right side of the message. */
@@ -57,14 +61,36 @@ public class DialogBox extends HBox {
     }
 
     /**
-     * Creates a message spoken by Jarvis.
+     * Creates a message spoken by Jaylen.
      *
-     * @param text Jarvis' response
-     * @return the styled Jarvis dialog
+     * @param text Jaylen's response
+     * @return the styled Jaylen dialog
      */
-    public static DialogBox getJarvisDialog(String text) {
+    public static DialogBox getJaylenDialog(String text) {
         DialogBox dialogBox = new DialogBox(text, "J");
-        dialogBox.getStyleClass().add("jarvis-dialog");
+        dialogBox.getStyleClass().add("jaylen-dialog");
         return dialogBox;
+    }
+
+    /**
+     * Creates a visually prominent error message spoken by Jaylen.
+     *
+     * @param text the formatted error response
+     * @return the styled error dialog
+     */
+    public static DialogBox getErrorDialog(String text) {
+        DialogBox dialogBox = new DialogBox(text, "!");
+        dialogBox.getStyleClass().addAll("jaylen-dialog", "error-dialog");
+        return dialogBox;
+    }
+
+    /**
+     * Makes the message bubble expand and wrap with the chat window.
+     *
+     * @param containerWidth the current width available for the conversation
+     */
+    public void bindDialogWidth(ObservableNumberValue containerWidth) {
+        dialog.maxWidthProperty().bind(
+                Bindings.max(240, Bindings.subtract(containerWidth, 110)));
     }
 }

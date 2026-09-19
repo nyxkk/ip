@@ -1,4 +1,4 @@
-package jarvis;
+package jaylen;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -7,14 +7,14 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Reads and writes Jarvis tasks in a human-readable text file. */
+/** Reads and writes Jaylen tasks in a human-readable text file. */
 public class Storage {
-    private static final String STORAGE_PROPERTY = "jarvis.storage";
-    private static final Path DEFAULT_PATH = Path.of("data", "jarvis.txt");
+    private static final String STORAGE_PROPERTY = "jaylen.storage";
+    private static final Path DEFAULT_PATH = Path.of("data", "jaylen.txt");
 
     private final Path filePath;
 
-    /** Creates storage using the configured path or {@code ./data/jarvis.txt}. */
+    /** Creates storage using the configured path or {@code ./data/jaylen.txt}. */
     public Storage() {
         String configuredPath = System.getProperty(STORAGE_PROPERTY);
         filePath = configuredPath == null || configuredPath.isBlank()
@@ -26,7 +26,7 @@ public class Storage {
      * Loads all saved tasks, returning an empty list when the file is absent.
      *
      * @return the saved tasks
-     * @throws JarvisException if the file cannot be read or is malformed
+     * @throws JaylenException if the file cannot be read or is malformed
      */
     public ArrayList<Task> load() {
         if (Files.notExists(filePath)) {
@@ -42,8 +42,8 @@ public class Storage {
                 }
             }
             return tasks;
-        } catch (IOException exception) {
-            throw new JarvisException("I couldn't read the save file.");
+        } catch (IOException | SecurityException exception) {
+            throw new JaylenException("I couldn't read the save file.");
         }
     }
 
@@ -51,7 +51,7 @@ public class Storage {
      * Saves all tasks and creates the parent directory when necessary.
      *
      * @param tasks the tasks to save
-     * @throws JarvisException if the file cannot be written
+     * @throws JaylenException if the file cannot be written
      */
     public void save(List<Task> tasks) {
         try {
@@ -63,8 +63,8 @@ public class Storage {
                     .map(this::formatTask)
                     .toList();
             Files.write(filePath, lines, StandardCharsets.UTF_8);
-        } catch (IOException exception) {
-            throw new JarvisException("I couldn't save your tasks.");
+        } catch (IOException | SecurityException exception) {
+            throw new JaylenException("I couldn't save your tasks.");
         }
     }
 
@@ -94,7 +94,7 @@ public class Storage {
                 requireFieldCount(fields, 5, lineNumber);
                 yield new Event(fields[2], fields[3], fields[4]);
             }
-            case GENERIC -> throw new JarvisException("The save file contains an invalid task type.");
+            case GENERIC -> throw new JaylenException("The save file contains an invalid task type.");
         };
     }
 
@@ -102,7 +102,7 @@ public class Storage {
         if ("1".equals(status)) {
             task.markAsDone();
         } else if (!"0".equals(status)) {
-            throw new JarvisException("The save file contains an invalid completion status.");
+            throw new JaylenException("The save file contains an invalid completion status.");
         }
     }
 
@@ -112,8 +112,8 @@ public class Storage {
         }
     }
 
-    private JarvisException malformedLine(int lineNumber) {
-        return new JarvisException("The save file is malformed on line " + lineNumber + ".");
+    private JaylenException malformedLine(int lineNumber) {
+        return new JaylenException("The save file is malformed on line " + lineNumber + ".");
     }
 
     private String formatTask(Task task) {
